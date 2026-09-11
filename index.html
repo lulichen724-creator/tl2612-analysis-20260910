@@ -359,6 +359,28 @@
     .cannot { margin-top: 10px !important; padding-top: 9px; border-top: 1px solid var(--border); }
     .cannot b { color: var(--navy); }
 
+    .flow-summary { display: grid; grid-template-columns: 1.25fr repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .flow-kpi { padding: 16px 17px; }
+    .flow-kpi.primary { color: var(--white); background: var(--navy); border-color: var(--navy); }
+    .flow-kpi .label { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .05em; }
+    .flow-kpi.primary .label { color: #cbd7e6; }
+    .flow-kpi .value { margin: 4px 0 2px; color: var(--navy); font-size: 1.32rem; font-weight: 800; }
+    .flow-kpi.primary .value { color: var(--orange-2); }
+    .flow-kpi p { margin: 0; color: var(--muted); font-size: .7rem; }
+    .flow-kpi.primary p { color: #d8e2ef; }
+    .flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+    .flow-type { padding: 14px; }
+    .flow-type-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .flow-type-head b { color: var(--navy); font-size: .82rem; }
+    .flow-type-head strong { color: var(--orange); font-size: 1rem; }
+    .flow-bar { height: 7px; margin: 9px 0 7px; overflow: hidden; background: var(--panel); border-radius: 999px; }
+    .flow-bar i { display: block; height: 100%; background: var(--orange); border-radius: inherit; }
+    .flow-type.sell .flow-bar i { background: var(--navy); }
+    .flow-type.neutral .flow-bar i { background: var(--series-gray); }
+    .flow-type p { margin: 0; color: var(--muted); font-size: .68rem; }
+    .quality-line { margin-top: 11px; padding: 11px 13px; color: var(--muted); background: var(--white); border: 1px solid var(--border); border-radius: 11px; font-size: .73rem; }
+    .quality-line b { color: var(--navy); }
+
     .ledger-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); }
     .ledger { width: 100%; border-collapse: collapse; min-width: 960px; }
     .ledger th, .ledger td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; font-size: .76rem; }
@@ -424,6 +446,7 @@
       .logic-step:nth-child(2n)::after { display: none; }
       .evidence-grid { grid-template-columns: 1fr; }
       .analysis-grid, .indicator-grid, .counter-grid, .method-links { grid-template-columns: 1fr; }
+      .flow-summary, .flow-grid { grid-template-columns: 1fr 1fr; }
       .pattern-layout { grid-template-columns: 1fr; }
       .pattern-status { grid-template-columns: 1fr; }
       .pattern-status > div { border-right: 0; border-bottom: 1px solid var(--border); }
@@ -705,6 +728,30 @@
         </div>
       </section>
 
+      <section class="block" aria-labelledby="flowTitle">
+        <div class="block-title">
+          <div><p class="section-kicker">Tick trade structure</p><h2 id="flowTitle">逐笔交易结构与持仓驱动</h2></div>
+          <p>东方财富掘金原始 trade_type · 按 last_volume 加权</p>
+        </div>
+        <div class="flow-summary">
+          <article class="card flow-kpi primary"><div class="label">结构结论</div><div class="value">平仓主导，空方略占优</div><p>平仓型49.88%高于开仓型41.50%；空方主动型较多方主动型高2.62个百分点。</p></article>
+          <article class="card flow-kpi"><div class="label">开仓型成交</div><div class="value">41.50%</div><p>双开＋多开＋空开</p></article>
+          <article class="card flow-kpi"><div class="label">平仓型成交</div><div class="value">49.88%</div><p>双平＋空平＋多平</p></article>
+          <article class="card flow-kpi"><div class="label">换手型成交</div><div class="value">8.61%</div><p>多换＋空换</p></article>
+        </div>
+        <div class="flow-grid" aria-label="八类逐笔成交占比">
+          <article class="card flow-type neutral"><div class="flow-type-head"><b>双开</b><strong>2.12%</strong></div><div class="flow-bar"><i style="width:8.3%"></i></div><p>2,121手 · 双方新增</p></article>
+          <article class="card flow-type neutral"><div class="flow-type-head"><b>双平</b><strong>3.54%</strong></div><div class="flow-bar"><i style="width:13.9%"></i></div><p>3,548手 · 双方离场</p></article>
+          <article class="card flow-type"><div class="flow-type-head"><b>多开</b><strong>16.70%</strong></div><div class="flow-bar"><i style="width:65.5%"></i></div><p>16,734手 · 多头主动开仓型</p></article>
+          <article class="card flow-type sell"><div class="flow-type-head"><b>空开</b><strong>22.69%</strong></div><div class="flow-bar"><i style="width:89%"></i></div><p>22,742手 · 空头主动开仓型</p></article>
+          <article class="card flow-type"><div class="flow-type-head"><b>空平</b><strong>25.49%</strong></div><div class="flow-bar"><i style="width:100%"></i></div><p>25,543手 · 空头主动平仓型</p></article>
+          <article class="card flow-type sell"><div class="flow-type-head"><b>多平</b><strong>20.86%</strong></div><div class="flow-bar"><i style="width:81.8%"></i></div><p>20,902手 · 多头主动平仓型</p></article>
+          <article class="card flow-type"><div class="flow-type-head"><b>多换</b><strong>3.68%</strong></div><div class="flow-bar"><i style="width:14.4%"></i></div><p>3,686手 · 多头内部换手</p></article>
+          <article class="card flow-type sell"><div class="flow-type-head"><b>空换</b><strong>4.94%</strong></div><div class="flow-bar"><i style="width:19.4%"></i></div><p>4,948手 · 空头内部换手</p></article>
+        </div>
+        <div class="quality-line"><b>质量闭合：</b>22,583条Tick，成交量合计100,224手＝末笔累计成交量100,224手；八类识别100%，未识别0%；末持仓195,341手，与中金所日统计一致，较9月9日减少4,856手。分类描述成交性质，不能等同于净资金流。</div>
+      </section>
+
       <section class="block two-col">
         <article class="card logic-card" aria-labelledby="logicTitle">
           <p class="section-kicker">Reasoning chain</p>
@@ -749,8 +796,8 @@
         <div class="block-title"><div><p class="section-kicker">Evidence</p><h2 id="evidenceTitle">量价、持仓与数据质量</h2></div></div>
         <div class="evidence-grid">
           <article class="card evidence"><h3>量价</h3><p>9月10日价格下跌0.11点，成交量<strong>100,224手</strong>，为此前20日中位数的<strong>1.179倍</strong>。当前下行阶段有较高参与度。</p><div class="source-line"><span class="source-badge">CJPY</span><span>截至9月10日完整收盘</span></div></article>
-          <article class="card evidence"><h3>持仓</h3><p>截至9月9日持仓由196,398增至<strong>200,197手</strong>，同时价格下跌。说明新增头寸参与，无法仅凭总持仓断言全部为新空。</p><div class="source-line"><span class="source-badge">AKShare</span><span>持仓数据晚于主行情一个交易日</span></div></article>
-          <article class="card evidence"><h3>完整性</h3><p>六个周期CSV均通过排序、重复、缺失、数值和OHLC检查。JYDB字段与TLS已确认，数值查询遇远端网络失败；Wind当前契约不含期货行情。</p><div class="source-line"><span class="source-badge">校验</span><span>不使用估算值补缺口</span></div></article>
+          <article class="card evidence"><h3>持仓</h3><p>9月10日末持仓<strong>195,341手</strong>，较9月9日减少<strong>4,856手</strong>，同时价格下跌。结合平仓型成交49.88%，当日更符合减仓调整，而非单纯新增空头推动。</p><div class="source-line"><span class="source-badge">东财Tick / 中金所</span><span>日终持仓已交叉闭合</span></div></article>
+          <article class="card evidence"><h3>完整性</h3><p>六个周期CSV均通过排序、重复、缺失、数值和OHLC检查；Tick成交量、日成交量和日终持仓完成闭合，八类成交无未识别记录。</p><div class="source-line"><span class="source-badge">校验</span><span>逐笔原始分类，不使用分钟估算</span></div></article>
         </div>
       </section>
 
@@ -767,9 +814,10 @@
               <tr><td>均线位置</td><td>日线高于EMA20，60m低于EMA20/SMA20</td><td>高周期背景与小时调整并存</td><td>由价格计算；与均线方向同源</td><td><span class="status support">辅助</span></td></tr>
               <tr><td>动量</td><td>日线MACD柱负；15m柱转正但DIF仍负</td><td>中短周期调整，极短线负差收窄</td><td>同一价格序列的变换</td><td><span class="status support">辅助</span></td></tr>
               <tr><td>成交量 / OBV</td><td>下跌0.11点，成交100,224手，为20日中位数1.179倍</td><td>下行阶段参与度高于常态</td><td>成交量提供附加信息；OBV仍依赖收盘方向</td><td><span class="status support">支持调整</span></td></tr>
-              <tr><td>持仓量</td><td>截至9月9日，价格跌、持仓增3,799手</td><td>新增头寸参与下降过程</td><td>与成交量不同，但数据晚一日</td><td><span class="status pending">滞后</span></td></tr>
+              <tr><td>持仓量</td><td>9月10日价格跌、持仓减4,856手至195,341手</td><td>下降伴随净减仓，平仓退出更重要</td><td>东财Tick末值与中金所日统计交叉核验</td><td><span class="status support">已闭合</span></td></tr>
+              <tr><td>八类成交</td><td>平仓型49.88%，开仓型41.50%；空方主动型领先2.62个百分点</td><td>平仓主导且卖方略占优，支持短期偏弱但强度有限</td><td>逐笔trade_type独立于分钟K线推断</td><td><span class="status support">已闭合</span></td></tr>
               <tr><td>形态</td><td>降低高点已确认；116.14日线波谷未确认</td><td>只能列为收敛候选</td><td>需未来完整K线确认</td><td><span class="status pending">候选</span></td></tr>
-              <tr><td>数据缺口</td><td>9月10日持仓缺失；当前周线未完成</td><td>不补值、不提前使用</td><td>JYDB远端失败；Wind无期货路由</td><td><span class="status missing">保留空缺</span></td></tr>
+              <tr><td>数据边界</td><td>当前周线未完成；八类分类为供应商盘口口径</td><td>不提前使用周线结论，不把成交分类等同净资金流</td><td>保留方法与供应商口径限制</td><td><span class="status pending">已披露</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -778,7 +826,7 @@
       <section class="block" aria-labelledby="counterTitle">
         <div class="block-title"><div><p class="section-kicker">Competing evidence</p><h2 id="counterTitle">支持证据与反方证据</h2></div></div>
         <div class="counter-grid">
-          <article class="card counter-card negative"><h3>支持“调整仍未结束”</h3><ul><li>日线高点连续降低，小时价格位于20期均线下方。</li><li>日线MACD柱为负，60分钟与30分钟RSI均低于50。</li><li>9月10日下跌伴随高于20日中位数的成交量。</li><li>截至9月9日价格下跌且持仓增加，说明下降过程有新增参与者。</li></ul></article>
+          <article class="card counter-card negative"><h3>支持“调整仍未结束”</h3><ul><li>日线高点连续降低，小时价格位于20期均线下方。</li><li>日线MACD柱为负，60分钟与30分钟RSI均低于50。</li><li>9月10日下跌伴随高于20日中位数的成交量。</li><li>逐笔空方主动型48.48%高于多方主动型45.86%，平仓型成交占49.88%。</li></ul></article>
           <article class="card counter-card positive"><h3>反对“已经确认转空”</h3><ul><li>完成周线和日线仍保持在各自EMA20之上。</li><li>日线未跌破已确认波谷115.69，下降反转结构缺少低点确认。</li><li>15分钟、5分钟和1分钟动量在尾盘修复。</li><li>116.14只是60分钟确认低点，尚未成为日线确认波谷；假突破与重新进入区间仍是主要风险。</li></ul></article>
         </div>
       </section>
@@ -803,7 +851,7 @@
       </div>
     </main>
 
-    <footer>单文件分享版 · 数据截至2026-09-10收盘 · CJPY 0.5.2主行情 · AKShare持仓补充 · 平安橙/深海军蓝视觉体系</footer>
+    <footer>单文件分享版 · 数据截至2026-09-10收盘 · CJPY 0.5.2主行情 · 东方财富掘金Tick · 中金所/AKShare交叉核验 · 平安橙/深海军蓝视觉体系</footer>
   </div>
 
   <script>

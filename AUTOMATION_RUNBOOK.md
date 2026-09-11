@@ -34,6 +34,14 @@ Codex 每个实际交易日收盘后亲自取得数据、完成分析、生成�
 
 合格来源优先为东方财富掘金期货 Tick：`trade_type` 1—8，权重使用 `last_volume`。Token 只能从本机密钥文件或安全配置读取，绝不写入仓库、HTML、日志或回复。
 
+本机已安装 `gm` SDK。东方财富掘金终端运行并登录时，使用仓库脚本读取终端的短期本机会话凭据并汇总，不保存账号、密码或 Token：
+
+```powershell
+C:\Users\15704\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe scripts/eastmoney_tick_structure.py --symbol CFFEX.TL主力月份 --date YYYY-MM-DD --output work/eastmoney-tick-YYYY-MM-DD.json
+```
+
+脚本输出仍需与交易所日统计交叉核验；`publish_eight_types=true` 只表示 Tick 内部成交量闭合，不代替外部核验。终端未运行、登录失效或接口不可用时不得改用分钟估算。
+
 发布八类占比前必须完成：
 
 - 按 `last_volume` 计算各类型成交量；分母为当日全部 Tick 成交量。
