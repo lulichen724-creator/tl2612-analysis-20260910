@@ -86,7 +86,7 @@ def summarize(symbol: str, trading_date: date, ticks: pd.DataFrame) -> dict:
     if ticks.empty:
         raise RuntimeError(f"{symbol} 在 {trading_date.isoformat()} 没有 Tick 数据")
 
-    for column in ["last_volume", "cum_volume", "cum_position", "trade_type"]:
+    for column in ["price", "last_volume", "cum_volume", "cum_position", "trade_type"]:
         ticks[column] = pd.to_numeric(ticks[column], errors="coerce")
 
     negative_volume = int((ticks["last_volume"].fillna(0) < 0).sum())
@@ -123,6 +123,23 @@ def summarize(symbol: str, trading_date: date, ticks: pd.DataFrame) -> dict:
             }
         )
 
+    # TL trades in 0.01 point increments. Keep the exact volume-at-price
+    # distribution so a later multi-day step can calculate POC and dense zones
+    # without persisting account credentials or the full raw Tick stream.
+    profile_source = positive.dropna(subset=["price"]).copy()
+    profile_source["price_tick"] = profile_source["price"].round(2)
+    price_profile = (
+        profile_source.groupby("price_tick", sort=True)["last_volume"]
+        .sum()
+        .astype(int)
+    )
+    profile_rows = [
+        {"price": float(price), "volume": int(volume)}
+        for price, volume in price_profile.items()
+    ]
+    poc_price = float(price_profile.idxmax()) if not price_profile.empty else None
+    poc_volume = int(price_profile.max()) if not price_profile.empty else None
+
     return {
         "source": "Eastmoney Goldminer gm.api history(tick)",
         "symbol": symbol,
@@ -142,6 +159,10 @@ def summarize(symbol: str, trading_date: date, ticks: pd.DataFrame) -> dict:
         "internal_volume_closed": closed,
         "publish_eight_types": bool(closed and unrecognized_volume == 0),
         "categories": categories,
+        "price_profile_tick_size": 0.01,
+        "price_profile": profile_rows,
+        "poc_price": poc_price,
+        "poc_volume": poc_volume,
     }
 
 

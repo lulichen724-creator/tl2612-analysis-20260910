@@ -380,6 +380,28 @@
     .flow-type p { margin: 0; color: var(--muted); font-size: .68rem; }
     .quality-line { margin-top: 11px; padding: 11px 13px; color: var(--muted); background: var(--white); border: 1px solid var(--border); border-radius: 11px; font-size: .73rem; }
     .quality-line b { color: var(--navy); }
+    .micro-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 12px; margin: 12px 0; }
+    .micro-card { padding: 18px; }
+    .micro-card h3 { margin: 0; color: var(--navy); font-size: .94rem; }
+    .micro-card .subline { margin: 4px 0 12px; color: var(--muted); font-size: .7rem; }
+    .micro-chart { width: 100%; height: auto; display: block; }
+    .micro-verdict { margin-top: 12px; padding: 12px 14px; color: var(--navy); background: var(--orange-soft); border-left: 4px solid var(--orange); border-radius: 10px; font-size: .76rem; line-height: 1.65; }
+    .micro-verdict strong { color: var(--orange); }
+    .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .phase { padding: 11px; background: var(--panel); border-radius: 10px; }
+    .phase.active { background: var(--orange-soft); box-shadow: inset 0 0 0 1px var(--orange-2); }
+    .phase span { color: var(--muted); font-size: .65rem; font-weight: 800; }
+    .phase b { display: block; margin: 4px 0; color: var(--navy); font-size: .8rem; }
+    .phase p { margin: 0; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .trend-table-wrap { margin-top: 12px; overflow-x: auto; border: 1px solid var(--border); border-radius: 11px; }
+    .trend-table { width: 100%; min-width: 760px; border-collapse: collapse; }
+    .trend-table th, .trend-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: right; font-size: .7rem; font-variant-numeric: tabular-nums; }
+    .trend-table th { color: var(--navy); background: var(--blue-soft); }
+    .trend-table th:first-child, .trend-table td:first-child { text-align: left; }
+    .trend-table tr:last-child td { border-bottom: 0; }
+    .trend-table .latest td { background: var(--orange-pale); font-weight: 700; }
+    .negative-number { color: var(--navy); }
+    .positive-number { color: var(--orange); }
 
     .ledger-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); }
     .ledger { width: 100%; border-collapse: collapse; min-width: 960px; }
@@ -447,6 +469,7 @@
       .evidence-grid { grid-template-columns: 1fr; }
       .analysis-grid, .indicator-grid, .counter-grid, .method-links { grid-template-columns: 1fr; }
       .flow-summary, .flow-grid { grid-template-columns: 1fr 1fr; }
+      .micro-grid, .phase-grid { grid-template-columns: 1fr; }
       .pattern-layout { grid-template-columns: 1fr; }
       .pattern-status { grid-template-columns: 1fr; }
       .pattern-status > div { border-right: 0; border-bottom: 1px solid var(--border); }
@@ -485,7 +508,7 @@
         <div>
           <p class="section-kicker">Current view</p>
           <h2 id="decisionTitle">周线上升背景仍在，但日线和小时线已确认向下扩展调整</h2>
-          <p>116.14局部支撑被完整日线跌破，原收敛三角形候选失效；收盘116.05位于日线EMA20和SMA20下方。短期方向已转弱，但115.69主要日线波谷仍未失守。</p>
+          <p>116.14局部支撑被完整日线跌破，原收敛三角形候选失效；近6日成交重心由116.53持续下移至116.13，9月8日起连续4日空方主动占优。短期方向已转弱，但115.69主要日线波谷仍未失守。</p>
         </div>
         <div class="decision-side">
           <span class="decision-label">当前技术状态</span>
@@ -538,13 +561,13 @@
           </article>
           <article class="summary-item">
             <div class="eyebrow">当前策略含义</div>
-            <h3>116.14下方按弱势处理，116.23以上才视为修复</h3>
-            <p>116.03是下一即时防线，跌破后依次观察115.97与115.82；只有60分钟收回116.14并进一步站上116.23，才削弱当前偏空结论。</p>
+            <h3>116.13下方按弱势处理，116.30以上才重新进入密集成交区</h3>
+            <p>116.03是下一即时防线；向上先观察当日POC 116.13、前日POC 116.26和密集区下沿116.30。进入116.30—116.54后，精确POC 116.45是核心接受/阻力点。</p>
           </article>
         </div>
         <div class="summary-path" aria-label="三种情景摘要">
           <div class="path-item base"><span>基准情景</span><b>116.03—116.23弱势整理</b></div>
-          <div class="path-item"><span>向上改判</span><b>116.14初步修复；116.23解除即时弱势</b></div>
+          <div class="path-item"><span>向上改判</span><b>116.13初步修复；116.30重返密集区</b></div>
           <div class="path-item"><span>向下升级</span><b>116.02续弱；115.68确认日线破位</b></div>
         </div>
       </section>
@@ -573,12 +596,16 @@
           <h3 id="levelsTitle">精确点位地图</h3>
           <div class="level-summary"><span>当前价</span><strong>116.05</strong></div>
           <div class="levels">
-            <div class="level-row resistance"><span class="level-code">R6</span><span class="level-price">117.05</span><span class="level-desc">主要日线高点</span></div>
-            <div class="level-row resistance"><span class="level-code">R5</span><span class="level-price">116.61</span><span class="level-desc">已确认降低高点</span></div>
-            <div class="level-row resistance"><span class="level-code">R4</span><span class="level-price">116.27</span><span class="level-desc">60分钟SMA20</span></div>
+            <div class="level-row resistance"><span class="level-code">R8</span><span class="level-price">117.05</span><span class="level-desc">主要日线高点</span></div>
+            <div class="level-row resistance"><span class="level-code">R7</span><span class="level-price">116.61</span><span class="level-desc">已确认降低高点</span></div>
+            <div class="level-row resistance"><span class="level-code">VP3</span><span class="level-price">116.50</span><span class="level-desc">密集带上部节点（116.50—54）</span></div>
+            <div class="level-row resistance"><span class="level-code">POC</span><span class="level-price">116.45</span><span class="level-desc">近6日最大成交量价位</span></div>
+            <div class="level-row resistance"><span class="level-code">VP2</span><span class="level-price">116.35</span><span class="level-desc">密集带中部节点（116.35—39）</span></div>
+            <div class="level-row resistance"><span class="level-code">VP1</span><span class="level-price">116.30</span><span class="level-desc">主要密集区下沿</span></div>
+            <div class="level-row resistance"><span class="level-code">D-POC</span><span class="level-price">116.26</span><span class="level-desc">9月10日单日成交量峰值</span></div>
             <div class="level-row resistance"><span class="level-code">R3</span><span class="level-price">116.23</span><span class="level-desc">前收盘 / 即时改判</span></div>
             <div class="level-row resistance"><span class="level-code">R2</span><span class="level-price">116.17</span><span class="level-desc">日线EMA20</span></div>
-            <div class="level-row resistance"><span class="level-code">R1</span><span class="level-price">116.14</span><span class="level-desc">失守的局部支撑</span></div>
+            <div class="level-row resistance"><span class="level-code">R1</span><span class="level-price">116.13</span><span class="level-desc">当日POC / 首个修复点</span></div>
             <div class="level-row current"><span class="level-code">NOW</span><span class="level-price">116.05</span><span class="level-desc">9月11日收盘</span></div>
             <div class="level-row support"><span class="level-code">S1</span><span class="level-price">116.03</span><span class="level-desc">当日低点</span></div>
             <div class="level-row support"><span class="level-code">S2</span><span class="level-price">115.97</span><span class="level-desc">9月1日低点</span></div>
@@ -586,7 +613,7 @@
             <div class="level-row support"><span class="level-code">S4</span><span class="level-price">115.69</span><span class="level-desc">主要日线波谷</span></div>
           </div>
           <div class="confirmation-box">
-            收盘过滤：60分钟 ≥ <b>116.14</b>初步修复、≥ <b>116.23</b>解除即时弱势；60分钟 ≤ <b>116.02</b>确认续弱；日线 ≤ <b>115.68</b>确认主要波谷失守。
+            成交密集区：近6日517,670手逐笔成交显示，主要堆积在<b>116.30—116.54</b>，精确POC为<b>116.45</b>。当前价位于其下方，该区域先按逐级阻力处理。收盘过滤：60分钟 ≥ <b>116.13</b>初步修复、≥ <b>116.23</b>解除即时弱势；60分钟 ≤ <b>116.02</b>确认续弱；日线 ≤ <b>115.68</b>确认主要波谷失守。
           </div>
         </aside>
       </section>
@@ -734,10 +761,75 @@
           <p>东方财富掘金原始 trade_type · 按 last_volume 加权</p>
         </div>
         <div class="flow-summary">
-          <article class="card flow-kpi primary"><div class="label">结构结论</div><div class="value">开平均衡，空方主动占优</div><p>开仓型45.62%与平仓型45.63%几乎相等；空方主动型较多方主动型高3.60个百分点。</p></article>
+          <article class="card flow-kpi primary"><div class="label">结构结论</div><div class="value">卖方优势延续，性质由减仓转为开平均衡</div><p>9月8日起连续4日空方主动占优；9月11日优势扩大至3.60个百分点，同时开仓和平仓各约45.6%。</p></article>
           <article class="card flow-kpi"><div class="label">开仓型成交</div><div class="value">45.62%</div><p>双开＋多开＋空开</p></article>
           <article class="card flow-kpi"><div class="label">平仓型成交</div><div class="value">45.63%</div><p>双平＋空平＋多平</p></article>
           <article class="card flow-kpi"><div class="label">换手型成交</div><div class="value">8.74%</div><p>多换＋空换</p></article>
+        </div>
+        <div class="micro-grid">
+          <article class="card micro-card">
+            <h3>近6日成交量分布：重心已经下移</h3>
+            <p class="subline">9月4—11日 · 517,670手真实Tick · 0.01逐价聚合、0.05固定价格带展示</p>
+            <svg class="micro-chart" viewBox="0 0 620 266" role="img" aria-label="TL2612近6日成交量按价格分布，116.45到116.49为最大成交密集带，精确POC为116.45">
+              <g font-family="Microsoft YaHei, Arial" font-size="11">
+                <line x1="96" y1="12" x2="96" y2="246" stroke="#d9dee5"/>
+                <g fill="#5b6470">
+                  <text x="12" y="27">116.55—59</text><text x="12" y="46">116.50—54</text><text x="12" y="65">116.45—49</text>
+                  <text x="12" y="84">116.40—44</text><text x="12" y="103">116.35—39</text><text x="12" y="122">116.30—34</text>
+                  <text x="12" y="141">116.25—29</text><text x="12" y="160">116.20—24</text><text x="12" y="179">116.15—19</text>
+                  <text x="12" y="198">116.10—14</text><text x="12" y="217">116.05—09</text><text x="12" y="236">116.00—04</text>
+                </g>
+                <g>
+                  <rect x="96" y="16" width="198" height="13" rx="3" fill="#a7adb5"/><rect x="96" y="35" width="329" height="13" rx="3" fill="#ff8a33"/>
+                  <rect x="96" y="54" width="390" height="13" rx="3" fill="#ff6600"/><rect x="96" y="73" width="294" height="13" rx="3" fill="#ff8a33"/>
+                  <rect x="96" y="92" width="316" height="13" rx="3" fill="#ff8a33"/><rect x="96" y="111" width="265" height="13" rx="3" fill="#ff8a33"/>
+                  <rect x="96" y="130" width="178" height="13" rx="3" fill="#a7adb5"/><rect x="96" y="149" width="227" height="13" rx="3" fill="#a7adb5"/>
+                  <rect x="96" y="168" width="206" height="13" rx="3" fill="#a7adb5"/><rect x="96" y="187" width="232" height="13" rx="3" fill="#a7adb5"/>
+                  <rect x="96" y="206" width="162" height="13" rx="3" fill="#a7adb5"/><rect x="96" y="225" width="34" height="13" rx="3" fill="#a7adb5"/>
+                </g>
+                <g fill="#5b6470"><text x="500" y="65">71,128手 · 13.74%</text><text x="436" y="46">59,944</text><text x="423" y="103">57,623</text></g>
+                <line x1="486" y1="52" x2="486" y2="69" stroke="#002960" stroke-width="3"/><text x="494" y="57" fill="#002960" font-weight="800">精确POC 116.45</text>
+                <line x1="129" y1="238" x2="129" y2="250" stroke="#ff6600" stroke-width="3"/><text x="138" y="257" fill="#ff6600" font-weight="800">现价116.05低于主要密集区</text>
+              </g>
+            </svg>
+            <div class="micro-verdict"><strong>点位含义：</strong>主要成交接受区集中在116.30—116.54，核心成交点为116.45。收盘116.05已经落在该区下方，因此116.13、116.26、116.30、116.35、116.45和116.50构成由近及远的逐级修复/阻力点；只有重新进入并站稳密集区，才说明下破后的价格接受发生逆转。</div>
+          </article>
+          <article class="card micro-card">
+            <h3>空方—多方主动差：9月8日发生方向切换</h3>
+            <p class="subline">空方主动＝空开＋多平＋空换；多方主动＝多开＋空平＋多换；双开、双平不计方向</p>
+            <svg class="micro-chart" viewBox="0 0 620 266" role="img" aria-label="9月4日至11日空方主动占比减多方主动占比趋势，9月8日起连续为正">
+              <g font-family="Microsoft YaHei, Arial" font-size="11">
+                <line x1="48" y1="128" x2="586" y2="128" stroke="#d9dee5" stroke-width="2"/><text x="8" y="132" fill="#5b6470">0pp</text>
+                <text x="8" y="48" fill="#5b6470">空方+</text><text x="8" y="222" fill="#5b6470">多方+</text>
+                <polyline points="70,181 170,160 270,74 370,48 470,88 570,74" fill="none" stroke="#002960" stroke-width="3"/>
+                <path d="M270 128 L270 74 L370 48 L470 88 L570 74 L570 128 Z" fill="#fff1e7" opacity=".9"/>
+                <g fill="#002960"><circle cx="70" cy="181" r="6"/><circle cx="170" cy="160" r="6"/></g>
+                <g fill="#ff6600"><circle cx="270" cy="74" r="7"/><circle cx="370" cy="48" r="7"/><circle cx="470" cy="88" r="7"/><circle cx="570" cy="74" r="7"/></g>
+                <g fill="#5b6470" text-anchor="middle"><text x="70" y="244">09-04</text><text x="170" y="244">09-07</text><text x="270" y="244">09-08</text><text x="370" y="244">09-09</text><text x="470" y="244">09-10</text><text x="570" y="244">09-11</text></g>
+                <g font-weight="800" text-anchor="middle"><text x="70" y="199" fill="#002960">−3.50</text><text x="170" y="178" fill="#002960">−2.13</text><text x="270" y="63" fill="#ff6600">+3.62</text><text x="370" y="37" fill="#ff6600">+5.09</text><text x="470" y="77" fill="#ff6600">+2.62</text><text x="570" y="63" fill="#ff6600">+3.60</text></g>
+                <line x1="220" y1="24" x2="220" y2="222" stroke="#ff6600" stroke-dasharray="5 4"/><text x="228" y="23" fill="#ff6600" font-weight="800">结构切换</text>
+              </g>
+            </svg>
+            <div class="micro-verdict"><strong>连续性比单日更重要：</strong>9月4和7日仍由多方主动占优；9月8日翻为空方领先3.62个百分点，此后4个交易日始终为正。9月11日较前日再扩大0.98个百分点，说明卖方控制没有随持仓降幅收窄而消失。</div>
+          </article>
+        </div>
+        <div class="phase-grid" aria-label="交易结构阶段分析">
+          <article class="phase"><span>阶段一 · 09-04至09-07</span><b>多方占优，增仓上行</b><p>空减多差为−3.50、−2.13个百分点；9月7日持仓增加6,559手、价格上涨0.09点，新增参与仍支持上行。</p></article>
+          <article class="phase"><span>阶段二 · 09-08至09-09</span><b>卖方接管，新增空头压力增强</b><p>空方优势转为+3.62、+5.09个百分点，持仓连续增加1,588手和3,799手而价格回落，9月9日是本窗口卖方优势峰值。</p></article>
+          <article class="phase active"><span>阶段三 · 09-10至09-11</span><b>先集中减仓，再转为开平均衡下跌</b><p>9月10日平仓型升至49.88%、持仓减4,856手；11日开仓和平仓均约45.6%，持仓仅减251手，空开回升1.68个百分点。下跌已不再只由退出旧仓解释。</p></article>
+        </div>
+        <div class="trend-table-wrap">
+          <table class="trend-table" aria-label="近6日交易结构趋势明细">
+            <thead><tr><th>日期</th><th>涨跌</th><th>持仓变化</th><th>开仓型</th><th>平仓型</th><th>空方−多方</th><th>单日POC</th><th>当日结构</th></tr></thead>
+            <tbody>
+              <tr><td>09-04</td><td class="negative-number">−0.02</td><td>—</td><td>45.51%</td><td>45.17%</td><td class="negative-number">−3.50pp</td><td>116.35</td><td>多方略占优</td></tr>
+              <tr><td>09-07</td><td class="positive-number">+0.09</td><td class="positive-number">+6,559</td><td>52.05%</td><td>39.02%</td><td class="negative-number">−2.13pp</td><td>116.53</td><td>开仓扩张、偏多</td></tr>
+              <tr><td>09-08</td><td class="negative-number">−0.02</td><td class="positive-number">+1,588</td><td>49.54%</td><td>42.72%</td><td class="positive-number">+3.62pp</td><td>116.50</td><td>卖方开始接管</td></tr>
+              <tr><td>09-09</td><td class="negative-number">−0.08</td><td class="positive-number">+3,799</td><td>49.31%</td><td>42.27%</td><td class="positive-number">+5.09pp</td><td>116.44</td><td>增仓下跌、卖压峰值</td></tr>
+              <tr><td>09-10</td><td class="negative-number">−0.11</td><td class="negative-number">−4,856</td><td>41.50%</td><td>49.88%</td><td class="positive-number">+2.62pp</td><td>116.26</td><td>平仓主导的减仓下跌</td></tr>
+              <tr class="latest"><td>09-11</td><td class="negative-number">−0.18</td><td class="negative-number">−251</td><td>45.62%</td><td>45.63%</td><td class="positive-number">+3.60pp</td><td>116.13</td><td>开平均衡、卖方延续</td></tr>
+            </tbody>
+          </table>
         </div>
         <div class="flow-grid" aria-label="八类逐笔成交占比">
           <article class="card flow-type neutral"><div class="flow-type-head"><b>双开</b><strong>2.49%</strong></div><div class="flow-bar"><i style="width:10.2%"></i></div><p>2,326手 · 双方新增</p></article>
@@ -749,7 +841,7 @@
           <article class="card flow-type"><div class="flow-type-head"><b>多换</b><strong>3.86%</strong></div><div class="flow-bar"><i style="width:15.8%"></i></div><p>3,601手 · 多头内部换手</p></article>
           <article class="card flow-type sell"><div class="flow-type-head"><b>空换</b><strong>4.88%</strong></div><div class="flow-bar"><i style="width:20%"></i></div><p>4,554手 · 空头内部换手</p></article>
         </div>
-        <div class="quality-line"><b>质量闭合：</b>21,972条Tick，成交量合计93,256手＝末笔累计成交量93,256手＝CJPY日成交量；八类识别100%，未识别0%；末持仓195,090手，较9月10日减少251手。分类描述成交性质，不能等同于净资金流。</div>
+        <div class="quality-line"><b>质量闭合：</b>趋势窗口覆盖9月4、7、8、9、10、11日，共517,670手；每日last_volume合计均等于末笔cum_volume，八类识别率均为100%。当日21,972条Tick、93,256手与CJPY日成交量完全闭合，末持仓195,090手。9月3日历史Tick未由接口返回，因此窗口从9月4日开始，未作插值。分类描述成交性质，不能等同于净资金流。</div>
       </section>
 
       <section class="block two-col">
@@ -815,7 +907,8 @@
               <tr><td>动量</td><td>日线MACD负柱扩大；60m/30m RSI约36</td><td>调整动量仍占优，但尚非极端超卖</td><td>同一价格序列的变换</td><td><span class="status support">辅助</span></td></tr>
               <tr><td>成交量 / OBV</td><td>下跌0.18点，成交93,256手，为20日中位数1.038倍</td><td>下行有正常以上参与，未见成交高潮</td><td>成交量增加维度；OBV仍依赖收盘方向</td><td><span class="status support">支持调整</span></td></tr>
               <tr><td>持仓量</td><td>末持仓195,090手，较前日减少251手</td><td>净持仓近乎稳定，非单纯减仓行情</td><td>东方财富逐笔末值</td><td><span class="status support">已闭合</span></td></tr>
-              <tr><td>八类成交</td><td>开仓型45.62%、平仓型45.63%；空方主动领先3.60个百分点</td><td>开平均衡而卖方略占优，与价格下跌一致</td><td>原始trade_type，独立于分钟K线推断</td><td><span class="status support">已闭合</span></td></tr>
+              <tr><td>成交量分布</td><td>近6日POC 116.45；日POC由116.53连续下移至116.13</td><td>成交接受重心下降；116.30—116.54转为上方密集阻力区</td><td>真实Tick按成交价和last_volume聚合</td><td><span class="status primary">主证据</span></td></tr>
+              <tr><td>八类成交</td><td>9月8日起连续4日空方主动领先；最新为3.60个百分点</td><td>卖方优势具有连续性，且11日由集中减仓转为开平均衡</td><td>原始trade_type，独立于分钟K线推断</td><td><span class="status support">已闭合</span></td></tr>
               <tr><td>形态</td><td>116.14候选低点未确认即被跌破</td><td>三角形候选失效，只确认整理向下扩展</td><td>遵守转折点时间可知性</td><td><span class="status primary">向下确认</span></td></tr>
               <tr><td>数据边界</td><td>中金所公开日表尚未生成；成交量由CJPY与东财闭合</td><td>持仓末值保留供应商口径说明</td><td>不把成交分类等同净资金流</td><td><span class="status pending">已披露</span></td></tr>
             </tbody>
@@ -876,10 +969,13 @@
       {d:'09-11',o:116.13,h:116.20,l:116.03,c:116.05,v:93256}
     ];
     const levels = [
-      {p:117.05,t:'R6',kind:'major'}, {p:116.61,t:'R5',kind:'major'},
-      {p:116.23,t:'R3',kind:'near'}, {p:116.14,t:'R1',kind:'major'},
+      {p:117.05,t:'R8',kind:'major'}, {p:116.61,t:'R7',kind:'major'},
+      {p:116.45,t:'POC',kind:'profile'}, {p:116.35,t:'VP2',kind:'profile'},
+      {p:116.30,t:'VP1',kind:'profile'}, {p:116.26,t:'D-POC',kind:'profile'},
+      {p:116.23,t:'R3',kind:'near'}, {p:116.13,t:'R1',kind:'major'},
       {p:116.03,t:'S1',kind:'near'}, {p:115.69,t:'S4',kind:'major'}
     ];
+    const profileZones = [{low:116.30,high:116.54,label:'近6日主要成交密集区'}];
     const colors = {orange:'#ff6600', navy:'#002960', gray:'#a7adb5', grid:'#d9dee5', muted:'#5b6470', white:'#ffffff', soft:'#f5f6f8'};
     const svg = document.getElementById('priceChart');
     const tooltip = document.getElementById('chartTooltip');
@@ -917,9 +1013,14 @@
         svg.appendChild(txt(W-m.r+8,yy+4,p.toFixed(2),{'font-size':'11'}));
       }
       if(showLevels){
+        profileZones.forEach(zone=>{
+          const top=y(zone.high), bottom=y(zone.low);
+          svg.appendChild(el('rect',{x:m.l,y:top,width:W-m.l-m.r,height:Math.max(2,bottom-top),fill:'#fff1e7',opacity:.48}));
+          svg.appendChild(txt(W-m.r-5,top+13,`${zone.label} ${zone.low.toFixed(2)}—${zone.high.toFixed(2)}`,{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
+        });
         levels.forEach(l=>{
           const yy=y(l.p), stroke=l.kind==='major'?colors.navy:colors.orange;
-          svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,stroke,'stroke-width':l.kind==='major'?1.4:1,'stroke-dasharray':l.kind==='major'?'6 4':'3 4',opacity:.75}));
+          svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,stroke,'stroke-width':l.kind==='profile'?1.6:(l.kind==='major'?1.4:1),'stroke-dasharray':l.kind==='major'?'6 4':'3 4',opacity:l.kind==='profile'?.9:.75}));
           svg.appendChild(txt(m.l+5,yy-4,`${l.t} ${l.p.toFixed(2)}`,{fill:stroke,'font-size':'10','font-weight':'700'}));
         });
       }
