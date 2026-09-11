@@ -352,6 +352,38 @@
     .direction-rule { margin-top: 9px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
     .direction-rule b { color: var(--orange); }
 
+    .trade-structure-grid { display: grid; grid-template-columns: minmax(260px,.82fr) minmax(420px,1.35fr) minmax(260px,.83fr); gap: 12px; }
+    .trade-verdict, .trade-bars, .trade-method { padding: 20px; }
+    .trade-verdict { border-top: 4px solid var(--navy); }
+    .trade-verdict .headline { margin: 7px 0 5px; color: var(--navy); font-size: 1.35rem; font-weight: 800; }
+    .trade-verdict .confidence { display: inline-flex; margin: 8px 0 12px; padding: 5px 9px; color: #9a3d00; background: var(--orange-soft); border-radius: 999px; font-size: .7rem; font-weight: 800; }
+    .trade-verdict p, .trade-method p { margin: 7px 0; color: var(--muted); font-size: .77rem; }
+    .trade-facts { display: grid; grid-template-columns: repeat(2,1fr); gap: 7px; margin-top: 13px; }
+    .trade-fact { padding: 10px; background: var(--panel); border-radius: 10px; }
+    .trade-fact span { display: block; color: var(--muted); font-size: .64rem; }
+    .trade-fact b { display: block; margin-top: 2px; color: var(--navy); font-size: .94rem; }
+    .trade-bars h3, .trade-method h3 { margin-bottom: 4px; }
+    .trade-bars .caption { color: var(--muted); font-size: .7rem; }
+    .structure-bars { display: grid; gap: 7px; margin-top: 14px; }
+    .structure-row { display: grid; grid-template-columns: 42px minmax(0,1fr) 58px; gap: 8px; align-items: center; }
+    .structure-row .name { color: var(--navy); font-size: .72rem; font-weight: 800; }
+    .structure-row .track { height: 13px; overflow: hidden; background: #edf0f3; border-radius: 999px; }
+    .structure-row .fill { display: block; height: 100%; min-width: 2px; background: var(--orange); border-radius: inherit; }
+    .structure-row.bear .fill { background: var(--navy); }
+    .structure-row.neutral .fill { background: var(--gray); }
+    .structure-row.unknown .fill { background: #c9ced5; }
+    .structure-row .pct { color: var(--ink); text-align: right; font-size: .72rem; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .trade-groups { display: grid; grid-template-columns: repeat(4,1fr); gap: 7px; margin-top: 14px; }
+    .trade-group { padding: 9px; text-align: center; background: var(--panel); border-radius: 9px; }
+    .trade-group span { display: block; color: var(--muted); font-size: .61rem; }
+    .trade-group b { color: var(--navy); font-size: .84rem; }
+    .quality-meter { margin: 13px 0; }
+    .quality-meter .meter-head { display: flex; justify-content: space-between; color: var(--muted); font-size: .67rem; }
+    .quality-meter .meter { height: 8px; margin-top: 6px; overflow: hidden; background: #edf0f3; border-radius: 999px; }
+    .quality-meter .meter span { display: block; width: 91.91%; height: 100%; background: var(--orange); }
+    .trade-rule { margin-top: 11px; padding: 10px 11px; color: var(--navy); background: var(--blue-soft); border-radius: 10px; font-size: .7rem; line-height: 1.5; }
+    .trade-warning { margin-top: 10px; padding-left: 10px; color: var(--muted); border-left: 3px solid var(--orange); font-size: .7rem; }
+
     .indicator-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
     .indicator { padding: 17px; }
     .indicator .reading { margin: 8px 0 4px; color: var(--orange); font-size: 1.05rem; font-weight: 800; }
@@ -424,6 +456,7 @@
       .logic-step:nth-child(2n)::after { display: none; }
       .evidence-grid { grid-template-columns: 1fr; }
       .analysis-grid, .indicator-grid, .counter-grid, .method-links { grid-template-columns: 1fr; }
+      .trade-structure-grid { grid-template-columns: 1fr; }
       .pattern-layout { grid-template-columns: 1fr; }
       .pattern-status { grid-template-columns: 1fr; }
       .pattern-status > div { border-right: 0; border-bottom: 1px solid var(--border); }
@@ -692,6 +725,61 @@
         </div>
       </section>
 
+      <section class="block" aria-labelledby="tradeStructureTitle">
+        <div class="block-title">
+          <div><p class="section-kicker">Position-flow estimate</p><h2 id="tradeStructureTitle">交易结构与持仓驱动</h2></div>
+          <p>1分钟价格 × 成交量 × 持仓变化；八类为结构估算</p>
+        </div>
+        <div class="trade-structure-grid">
+          <article class="card trade-verdict">
+            <div class="eyebrow">9月10日结构结论</div>
+            <div class="headline">减仓下跌，多平略占优</div>
+            <span class="confidence">估算置信度：偏低</span>
+            <p>收盘下跌0.11点，日终持仓减少4,856手。分钟分类中多平16.89%为最大可识别单项，方向差值为−2.95个百分点，结构轻微偏空；未识别比例较高，不能据此确认空头趋势。</p>
+            <div class="trade-facts">
+              <div class="trade-fact"><span>收盘变化</span><b>−0.11点</b></div>
+              <div class="trade-fact"><span>持仓变化</span><b>−4,856手</b></div>
+              <div class="trade-fact"><span>日成交量</span><b>100,224手</b></div>
+              <div class="trade-fact"><span>方向差值</span><b>−2.95pct</b></div>
+            </div>
+          </article>
+
+          <article class="card trade-bars">
+            <h3>八类成交结构估算</h3>
+            <div class="caption">分母为中金所当日总成交量；未覆盖和方向无法识别的成交统一计入“未识别”</div>
+            <div class="structure-bars" aria-label="TL2612 2026年9月10日八类交易结构估算百分比">
+              <div class="structure-row"><span class="name">多开</span><span class="track"><i class="fill" style="width:22.65%"></i></span><span class="pct">10.32%</span></div>
+              <div class="structure-row bear"><span class="name">空开</span><span class="track"><i class="fill" style="width:21.06%"></i></span><span class="pct">9.60%</span></div>
+              <div class="structure-row bear"><span class="name">多平</span><span class="track"><i class="fill" style="width:37.06%"></i></span><span class="pct">16.89%</span></div>
+              <div class="structure-row"><span class="name">空平</span><span class="track"><i class="fill" style="width:29.01%"></i></span><span class="pct">13.22%</span></div>
+              <div class="structure-row neutral"><span class="name">多换</span><span class="track"><i class="fill" style="width:0%"></i></span><span class="pct">0.00%</span></div>
+              <div class="structure-row neutral"><span class="name">空换</span><span class="track"><i class="fill" style="width:9.26%"></i></span><span class="pct">4.22%</span></div>
+              <div class="structure-row neutral"><span class="name">双开</span><span class="track"><i class="fill" style="width:0%"></i></span><span class="pct">0.00%</span></div>
+              <div class="structure-row neutral"><span class="name">双平</span><span class="track"><i class="fill" style="width:0%"></i></span><span class="pct">0.00%</span></div>
+              <div class="structure-row unknown"><span class="name">未识别</span><span class="track"><i class="fill" style="width:100%"></i></span><span class="pct">45.76%</span></div>
+            </div>
+            <div class="trade-groups">
+              <div class="trade-group"><span>开仓力量</span><b>19.92%</b></div>
+              <div class="trade-group"><span>平仓力量</span><b>30.11%</b></div>
+              <div class="trade-group"><span>换手</span><b>4.22%</b></div>
+              <div class="trade-group"><span>未识别</span><b>45.76%</b></div>
+            </div>
+          </article>
+
+          <article class="card trade-method">
+            <h3>数据闭合与使用边界</h3>
+            <div class="quality-meter">
+              <div class="meter-head"><span>分钟成交覆盖</span><b>91.91%</b></div>
+              <div class="meter"><span></span></div>
+            </div>
+            <p><b>持仓闭合：</b>分钟持仓累计变化−4,856手，与中金所日终变化完全一致。</p>
+            <p><b>成交缺口：</b>分钟源合计92,118手，低于日统计100,224手；差额8,106手已计入未识别。</p>
+            <div class="trade-rule"><b>分类规则：</b>每分钟以收盘方向近似主动方向，以期末持仓变化区分开仓、平仓和换手；仅当｜Δ持仓｜=成交量时标记双开或双平。出现｜Δ持仓｜＞成交量的延迟更新分钟时直接列为未识别。</div>
+            <div class="trade-warning">这不是交易所逐笔开平流水。分钟内可能同时发生多种交易，价格方向也不能完全替代买卖盘主动方向，因此百分比只用于确认或削弱价格突破，不单独产生交易信号。</div>
+          </article>
+        </div>
+      </section>
+
       <section class="block" aria-labelledby="indicatorTitle">
         <div class="block-title">
           <div><p class="section-kicker">Indicator interpretation</p><h2 id="indicatorTitle">指标只解释价格，不独立投票</h2></div>
@@ -749,8 +837,8 @@
         <div class="block-title"><div><p class="section-kicker">Evidence</p><h2 id="evidenceTitle">量价、持仓与数据质量</h2></div></div>
         <div class="evidence-grid">
           <article class="card evidence"><h3>量价</h3><p>9月10日价格下跌0.11点，成交量<strong>100,224手</strong>，为此前20日中位数的<strong>1.179倍</strong>。当前下行阶段有较高参与度。</p><div class="source-line"><span class="source-badge">CJPY</span><span>截至9月10日完整收盘</span></div></article>
-          <article class="card evidence"><h3>持仓</h3><p>截至9月9日持仓由196,398增至<strong>200,197手</strong>，同时价格下跌。说明新增头寸参与，无法仅凭总持仓断言全部为新空。</p><div class="source-line"><span class="source-badge">AKShare</span><span>持仓数据晚于主行情一个交易日</span></div></article>
-          <article class="card evidence"><h3>完整性</h3><p>六个周期CSV均通过排序、重复、缺失、数值和OHLC检查。JYDB字段与TLS已确认，数值查询遇远端网络失败；Wind当前契约不含期货行情。</p><div class="source-line"><span class="source-badge">校验</span><span>不使用估算值补缺口</span></div></article>
+          <article class="card evidence"><h3>持仓</h3><p>9月10日日终持仓由<strong>200,197</strong>降至<strong>195,341手</strong>，减少4,856手；价格同步下跌，日级四象限落在“多平主导推断”。</p><div class="source-line"><span class="source-badge">中金所/AKShare</span><span>截至9月10日完整收盘</span></div></article>
+          <article class="card evidence"><h3>完整性</h3><p>分钟持仓变化与日终持仓变化完全闭合；分钟成交覆盖日成交的<strong>91.91%</strong>。八类结构保留45.76%未识别，不使用估算值强行补齐。</p><div class="source-line"><span class="source-badge">校验</span><span>价格、成交量与持仓同日对齐</span></div></article>
         </div>
       </section>
 
@@ -767,9 +855,9 @@
               <tr><td>均线位置</td><td>日线高于EMA20，60m低于EMA20/SMA20</td><td>高周期背景与小时调整并存</td><td>由价格计算；与均线方向同源</td><td><span class="status support">辅助</span></td></tr>
               <tr><td>动量</td><td>日线MACD柱负；15m柱转正但DIF仍负</td><td>中短周期调整，极短线负差收窄</td><td>同一价格序列的变换</td><td><span class="status support">辅助</span></td></tr>
               <tr><td>成交量 / OBV</td><td>下跌0.11点，成交100,224手，为20日中位数1.179倍</td><td>下行阶段参与度高于常态</td><td>成交量提供附加信息；OBV仍依赖收盘方向</td><td><span class="status support">支持调整</span></td></tr>
-              <tr><td>持仓量</td><td>截至9月9日，价格跌、持仓增3,799手</td><td>新增头寸参与下降过程</td><td>与成交量不同，但数据晚一日</td><td><span class="status pending">滞后</span></td></tr>
+              <tr><td>持仓量</td><td>9月10日价格跌0.11点、持仓减4,856手</td><td>日级结构指向多头退出；分钟八类估算中多平占比最高</td><td>持仓变化已与日终闭合；主动方向仍为价格代理</td><td><span class="status support">辅助确认</span></td></tr>
               <tr><td>形态</td><td>降低高点已确认；116.14日线波谷未确认</td><td>只能列为收敛候选</td><td>需未来完整K线确认</td><td><span class="status pending">候选</span></td></tr>
-              <tr><td>数据缺口</td><td>9月10日持仓缺失；当前周线未完成</td><td>不补值、不提前使用</td><td>JYDB远端失败；Wind无期货路由</td><td><span class="status missing">保留空缺</span></td></tr>
+              <tr><td>数据缺口</td><td>分钟成交较日统计少8,106手；当前周线未完成</td><td>缺口计入未识别，不提前使用未完成周线</td><td>逐笔主动方向缺失；Choice权限到期，Wind无期货逐笔路由</td><td><span class="status missing">明确披露</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -778,7 +866,7 @@
       <section class="block" aria-labelledby="counterTitle">
         <div class="block-title"><div><p class="section-kicker">Competing evidence</p><h2 id="counterTitle">支持证据与反方证据</h2></div></div>
         <div class="counter-grid">
-          <article class="card counter-card negative"><h3>支持“调整仍未结束”</h3><ul><li>日线高点连续降低，小时价格位于20期均线下方。</li><li>日线MACD柱为负，60分钟与30分钟RSI均低于50。</li><li>9月10日下跌伴随高于20日中位数的成交量。</li><li>截至9月9日价格下跌且持仓增加，说明下降过程有新增参与者。</li></ul></article>
+          <article class="card counter-card negative"><h3>支持“调整仍未结束”</h3><ul><li>日线高点连续降低，小时价格位于20期均线下方。</li><li>日线MACD柱为负，60分钟与30分钟RSI均低于50。</li><li>9月10日下跌伴随高于20日中位数的成交量。</li><li>9月10日减仓下跌，分钟结构中多平16.89%为最大可识别单项，说明多头退出对调整有一定贡献。</li></ul></article>
           <article class="card counter-card positive"><h3>反对“已经确认转空”</h3><ul><li>完成周线和日线仍保持在各自EMA20之上。</li><li>日线未跌破已确认波谷115.69，下降反转结构缺少低点确认。</li><li>15分钟、5分钟和1分钟动量在尾盘修复。</li><li>116.14只是60分钟确认低点，尚未成为日线确认波谷；假突破与重新进入区间仍是主要风险。</li></ul></article>
         </div>
       </section>
