@@ -156,9 +156,9 @@
       display: grid;
       grid-template-columns: minmax(0, 2.1fr) minmax(300px, .85fr);
       gap: 18px;
-      align-items: stretch;
+      align-items: start;
     }
-    .chart-card { min-height: 570px; overflow: hidden; }
+    .chart-card { min-height: 0; overflow: hidden; }
     .card-head {
       display: flex;
       align-items: flex-start;
@@ -195,26 +195,26 @@
     }
     .tooltip strong { color: var(--orange-2); }
 
-    .level-card { padding: 20px; }
+    .level-card { padding: 16px; }
     .level-summary {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin: 14px 0 18px;
-      padding: 13px 14px;
+      margin: 10px 0;
+      padding: 10px 12px;
       background: var(--orange-soft);
       border-left: 4px solid var(--orange);
       border-radius: 10px;
     }
     .level-summary strong { color: var(--orange); font-size: 1.45rem; }
-    .levels { display: grid; gap: 8px; }
+    .levels { display: grid; gap: 5px; }
     .level-row {
       display: grid;
       grid-template-columns: 42px 72px 1fr;
-      gap: 10px;
+      gap: 7px;
       align-items: center;
-      min-height: 44px;
-      padding: 8px 10px;
+      min-height: 36px;
+      padding: 5px 8px;
       border: 1px solid var(--border);
       border-radius: 10px;
     }
@@ -225,8 +225,8 @@
     .level-row.resistance .level-code { color: var(--navy); }
     .level-row.support .level-code { color: var(--orange); }
     .confirmation-box {
-      margin-top: 16px;
-      padding: 14px;
+      margin-top: 10px;
+      padding: 10px;
       color: var(--navy);
       background: var(--blue-soft);
       border-radius: 12px;
@@ -530,7 +530,7 @@
         <article class="card chart-card">
           <div class="card-head">
             <div>
-              <h3>最近15个交易日日K</h3>
+              <h3>最近17个交易日日K</h3>
               <p>橙色为收高，深蓝为收低；水平线是确认点，不是预测路径</p>
             </div>
             <div class="chart-actions" aria-label="图层控制">
@@ -540,7 +540,7 @@
             </div>
           </div>
           <div class="chart-wrap">
-            <svg id="priceChart" role="img" aria-label="TL2612最近15个交易日日K和成交量图"></svg>
+            <svg id="priceChart" role="img" aria-label="TL2612最近17个交易日日K、成交量和可切换形态标注图"></svg>
             <div class="tooltip" id="chartTooltip"></div>
           </div>
         </article>
@@ -808,6 +808,8 @@
 
   <script>
     const daily = [
+      {d:'08-19',o:116.81,h:117.05,l:116.45,c:116.55,v:64174},
+      {d:'08-20',o:116.47,h:116.56,l:116.22,c:116.33,v:75661},
       {d:'08-21',o:116.35,h:116.48,l:116.18,c:116.32,v:91307},
       {d:'08-24',o:116.40,h:116.78,l:116.34,c:116.68,v:105065},
       {d:'08-25',o:116.80,h:116.84,l:116.52,c:116.62,v:89832},
@@ -878,14 +880,18 @@
         const iHigh2=daily.findIndex(b=>b.d==='09-07');
         const iLow2=daily.findIndex(b=>b.d==='09-10');
         if([iHigh1,iLow1,iHigh2,iLow2].every(i=>i>=0)){
-          svg.appendChild(el('line',{x1:x(iHigh1),y1:y(117.05),x2:x(iLow2),y2:y(116.50),stroke:colors.navy,'stroke-width':3,opacity:.9}));
-          svg.appendChild(el('line',{x1:x(iLow1),y1:y(115.69),x2:x(iLow2),y2:y(116.14),stroke:colors.orange,'stroke-width':3,'stroke-dasharray':'8 5',opacity:.9}));
+          const patternLayer=el('g',{'class':'pattern-layer','aria-label':'收敛整理候选形态标注'});
+          patternLayer.appendChild(el('path',{d:`M ${x(iHigh1)} ${y(117.05)} L ${x(iLow2)} ${y(116.50)} L ${x(iLow2)} ${y(116.14)} L ${x(iLow1)} ${y(115.69)} Z`,fill:'#fff1e7',opacity:.58}));
+          patternLayer.appendChild(el('line',{x1:x(iHigh1),y1:y(117.05),x2:x(iLow2),y2:y(116.50),stroke:colors.navy,'stroke-width':3,opacity:.95}));
+          patternLayer.appendChild(el('line',{x1:x(iLow1),y1:y(115.69),x2:x(iLow2),y2:y(116.14),stroke:colors.orange,'stroke-width':3,'stroke-dasharray':'8 5',opacity:.95}));
           [[iHigh1,117.05,'H1'],[iLow1,115.69,'L1'],[iHigh2,116.61,'H2']].forEach(([i,p,label])=>{
-            svg.appendChild(el('circle',{cx:x(i),cy:y(p),r:5.5,fill:colors.navy,stroke:colors.white,'stroke-width':2}));
-            svg.appendChild(txt(x(i),y(p)-9,label,{fill:colors.navy,'text-anchor':'middle','font-size':'10','font-weight':'800'}));
+            patternLayer.appendChild(el('circle',{cx:x(i),cy:y(p),r:5.5,fill:colors.navy,stroke:colors.white,'stroke-width':2}));
+            const labelBelow=label==='H1';
+            patternLayer.appendChild(txt(x(i)+(labelBelow?10:0),y(p)+(labelBelow?17:-9),label,{fill:colors.navy,'text-anchor':labelBelow?'start':'middle','font-size':'10','font-weight':'800'}));
           });
-          svg.appendChild(el('circle',{cx:x(iLow2),cy:y(116.14),r:7,fill:colors.white,stroke:colors.orange,'stroke-width':3}));
-          svg.appendChild(txt(x(iLow2)-4,y(116.14)+18,'L2? 待确认',{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
+          patternLayer.appendChild(el('circle',{cx:x(iLow2),cy:y(116.14),r:7,fill:colors.white,stroke:colors.orange,'stroke-width':3}));
+          patternLayer.appendChild(txt(x(iLow2)-4,y(116.14)+18,'L2? 待确认',{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
+          svg.appendChild(patternLayer);
         }
       }
       daily.forEach((bar,i)=>{
