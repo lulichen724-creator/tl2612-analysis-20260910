@@ -633,16 +633,7 @@ html
 <p class="section-kicker">Price map</p>
 <h3 id="levelsTitle">精确点位地图</h3>
 <div class="level-summary"><span>当前价</span><strong>116.05</strong></div>
-<div class="levels">
-<div class="level-row resistance"><span class="level-code">R3</span><span class="level-price">116.61</span><span class="level-desc"><b>结构转强关口</b></span></div>
-<div class="level-row resistance"><span class="level-code">密集区</span><span class="level-price">116.30<br/>—116.39</span><span class="level-desc"><b>核心成交阻力区</b><small>分钟估算</small></span></div>
-<div class="level-row resistance"><span class="level-code">R1</span><span class="level-price">116.14</span><span class="level-desc"><b>短线修复关口</b></span></div>
-<div class="level-row current"><span class="level-code">NOW</span><span class="level-price">116.05</span><span class="level-desc"><b>当前收盘</b></span></div>
-<div class="level-row support"><span class="level-code">S1</span><span class="level-price">116.03</span><span class="level-desc"><b>短线支撑</b></span></div>
-<div class="level-row support"><span class="level-code">S2</span><span class="level-price">115.82</span><span class="level-desc"><b>下方承接观察位</b></span></div>
-<div class="level-row support"><span class="level-code">S3</span><span class="level-price">115.69</span><span class="level-desc"><b>日线关键支撑</b></span></div>
-</div>
-
+<div class="levels"><div class="level-row resistance"><span class="level-code">R6</span><span class="level-price">117.05</span><span class="level-desc"><b>主要前高</b></span></div><div class="level-row resistance"><span class="level-code">R5</span><span class="level-price">116.84</span><span class="level-desc"><b>次级前高压力</b></span></div><div class="level-row resistance"><span class="level-code">R4</span><span class="level-price">116.61</span><span class="level-desc"><b>结构转强关口</b></span></div><div class="level-row resistance"><span class="level-code">密集区</span><span class="level-price">116.30<br/>—116.39</span><span class="level-desc"><b>核心成交阻力区</b><small>分钟估算</small></span></div><div class="level-row resistance"><span class="level-code">R2</span><span class="level-price">116.23</span><span class="level-desc"><b>弱势解除观察位</b></span></div><div class="level-row resistance"><span class="level-code">R1</span><span class="level-price">116.14</span><span class="level-desc"><b>短线修复关口</b></span></div><div class="level-row current"><span class="level-code">NOW</span><span class="level-price">116.05</span><span class="level-desc"><b>当前收盘</b></span></div><div class="level-row support"><span class="level-code">S1</span><span class="level-price">116.03</span><span class="level-desc"><b>短线支撑</b></span></div><div class="level-row support"><span class="level-code">S2</span><span class="level-price">115.97</span><span class="level-desc"><b>下方首道承接</b></span></div><div class="level-row support"><span class="level-code">S3</span><span class="level-price">115.82</span><span class="level-desc"><b>前低支撑</b></span></div><div class="level-row support"><span class="level-code">S4</span><span class="level-price">115.69</span><span class="level-desc"><b>日线关键支撑</b></span></div></div>
 </aside>
 </section>
 <section aria-labelledby="evidenceTitle" class="block">
@@ -877,10 +868,10 @@ html
       {d:'09-11',o:116.13,h:116.20,l:116.03,c:116.05,v:93256}
     ];
     const levels = [
-      {p:116.61,t:'R3',kind:'major'},
-      {p:116.14,t:'R1',kind:'major'}, {p:116.03,t:'S1',kind:'near'},
-      {p:115.82,t:'S2',kind:'near'}, {p:115.69,t:'S3',kind:'major'}
-    ];
+{p:117.05,t:'R6',kind:'major'}, {p:116.61,t:'R4',kind:'major'},
+{p:116.23,t:'R2',kind:'near'}, {p:116.14,t:'R1',kind:'major'},
+{p:116.03,t:'S1',kind:'near'}, {p:115.69,t:'S4',kind:'major'}
+];
     const profileZones = [{low:116.30,high:116.39,label:'20日核心成交区'}];
     const colors = {orange:'#ff6600', navy:'#002960', gray:'#a7adb5', grid:'#d9dee5', muted:'#5b6470', white:'#ffffff', soft:'#f5f6f8'};
     const svg = document.getElementById('priceChart');
