@@ -41,4 +41,4 @@ for(const id of Object.keys(nodes).filter(id=>id.startsWith('morph-tab-'))){
 }
 function check(n){for(const v of Object.values(n.attrs))assert(!/NaN|undefined|Infinity/.test(v));n.children.forEach(check)}
 check(chart);
-console.log('PASS: HTML targets, identical dist, JS rendering, three chart switches, three scenario tabs, four pattern-study tabs, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
+console.log('PASS: HTML targets, identical dist, JS rendering, three chart switches, three scenario tabs, pattern-study tabs, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
