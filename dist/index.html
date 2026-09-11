@@ -641,9 +641,9 @@ html
 <div class="evidence-grid">
 <article class="card evidence"><h3>量价</h3><p>9月11日价格下跌<strong>0.18点</strong>，成交量<strong>93,256手</strong>，为此前20日中位数的<strong>1.038倍</strong>。下跌具有正常以上参与度，但未出现成交高潮。</p><div class="source-line"><span class="source-badge">CJPY 0.5.2</span><span>截至9月11日15:15完整收盘</span></div></article>
 <article class="card evidence"><h3>持仓</h3><p>末持仓<strong>195,090手</strong>，较前日仅减少<strong>251手</strong>。价格明显下跌而持仓近乎持平，说明多空换位和新旧头寸并存，不能解释成单一平仓下跌。</p><div class="source-line"><span class="source-badge">东方财富Tick</span><span>与CJPY成交量完全闭合</span></div></article>
-<article class="card evidence"><h3>主力与完整性</h3><p>TL2612占当日TL月份成交量<strong>95.26%</strong>，次主力成交量仅为其4.96%；七个周期CSV均通过质量检查，八类逐笔成交识别率100%。</p><div class="source-line"><span class="source-badge">CJPY / 东财</span><span>主力无歧义 · 不使用分钟估算</span></div></article>
+<article class="card evidence"><h3>主力与完整性</h3><p>TL2612占当日TL月份成交量<strong>95.26%</strong>，次主力成交量仅为其4.96%；七个周期CSV均通过质量检查，八类逐笔成交识别率100%。</p><div class="source-line"><span class="source-badge">CJPY / 东财</span><span>主力无歧义 · 八类状态采用Tick标签</span></div></article>
 </div>
-<div class="quality-line">成交位置：116.05位于局部密集区116.05—116.14下沿，承接尚待确认；上看116.20—116.24、116.30—116.39与116.45—116.54，下看115.85—115.89。不同窗口反映不同阶段，历史成交集中不等于当前挂单或有效支撑。</div></section>
+<div class="quality-line">波动与K线：日线ATR14为0.352点，当日振幅0.17点约为其48%；低开0.10点，但与前日价格区间重叠，不构成日线向下缺口。</div><div class="quality-line">成交位置：116.05位于局部密集区116.05—116.14下沿，承接尚待确认；上看116.20—116.24、116.30—116.39与116.45—116.54，下看115.85—115.89。不同窗口反映不同阶段，历史成交集中不等于当前挂单或有效支撑。</div></section>
 <section aria-labelledby="tfTitle" class="block">
 <div class="block-title">
 <div><p class="section-kicker">Timeframe stack</p><h2 id="tfTitle">多周期状态</h2></div>
@@ -709,9 +709,9 @@ html
 <div class="direction"><span>方向结论</span><b>小时级向下已确认</b></div>
 <div><span>行动状态</span><b>116.14下方维持偏弱</b></div>
 </div>
-<p>116.14尚未确认为日线波谷就被跌破，收敛候选失效。当前只确认短期向下调整；主要日线反转仍待115.69失守。</p>
+<p>116.14候选波谷未确认即被跌破。14:00曾收回116.14，15:00又收至116.07，修复失败；日线主要反转仍待115.69失守。图为结构示意，非等比例价格图。</p>
 <div class="pattern-legend">
-<div class="pattern-key"><i></i><span><b>深蓝实线：</b>117.05 → 116.61，已经确认的下降压力线。</span></div>
+<div class="pattern-key"><i></i><span><b>深蓝实线：</b>117.05 → 116.61，两高点参考连线；9月9日盘中已越线，不能视为持续有效压力线。</span></div>
 <div class="pattern-key orange dashed"><i></i><span><b>橙色虚线：</b>原候选上升支撑线，116.14未确认即失效。</span></div>
 <div class="pattern-key orange"><i></i><span><b>橙色实心点：</b>9月11日收盘116.05，完成小时级向下确认。</span></div>
 </div>
@@ -756,8 +756,8 @@ html
 <div class="indicator-grid">
 <article class="card indicator"><h3>日线 MACD</h3><div class="reading">DIF +0.1580｜柱 −0.0741</div><p>DIF仍为正，但柱线连续扩大为负，说明中期动量基础尚存而调整动量继续增强。</p><p class="cannot">边界：负柱不能单独确认日线转空。</p></article>
 <article class="card indicator"><h3>15分钟 MACD</h3><div class="reading">DIF −0.0448｜柱 +0.0032</div><p>DIF仍在零轴下方，正柱由盘中0.0082收窄至0.0032，修复动量未能推动价格收回116.14。</p><p class="cannot">边界：正柱不等于价格反转。</p></article>
-<article class="card indicator"><h3>完成周线 RSI</h3><div class="reading">RSI14 69.47</div><p>从前周72.41回落但仍处较高区域，与周线偏多、趋势成熟和短期回撤并存。</p><p class="cannot">边界：接近70不是卖出信号。</p></article>
-<article class="card indicator"><h3>日线 OBV</h3><div class="reading">当日 −93,256</div><p>连续两日收跌使OBV继续下降；绝对值取决于初始化，只比较斜率及是否与价格背离。</p><p class="cannot">边界：OBV不等于资金流。</p></article>
+<article class="card indicator"><h3>周线 / 日线 RSI</h3><div class="reading">周 69.47｜日 49.81</div><p>周线由72.41回落，日线已回到中轴附近；周线偏多与日线动量降温并存。</p><p class="cannot">边界：接近70不是卖出信号。</p></article>
+<article class="card indicator"><h3>日线 OBV</h3><div class="reading">当日 −93,256</div><p>连续四日收跌使OBV继续下降；绝对值取决于初始化，只比较斜率及是否与价格背离。</p><p class="cannot">边界：OBV不等于资金流。</p></article>
 </div>
 </section>
 <section aria-labelledby="flowTitle" class="block"><div class="block-title">
@@ -785,12 +785,12 @@ html
 </div>
 <div aria-labelledby="tab-up" class="tab-panel" hidden="" id="panel-up" role="tabpanel">
 <h4>收回失守区域</h4>
-<p>60分钟先收回116.14，再站上116.23才解除即时弱势；突破116.61才破坏近期降低高点序列。</p>
+<p>以完整60分钟收盘判断：收回116.14为初步修复，进一步站上116.23且后续不再跌回才解除近端弱势；116.61以上仍需日线收盘确认结构转强。</p>
 <div class="trigger"><span>改判确认</span><b>60m ≥ 116.23</b></div>
 </div>
 <div aria-labelledby="tab-down" class="tab-panel" hidden="" id="panel-down" role="tabpanel">
 <h4>调整继续扩展</h4>
-<p>60分钟收于116.02以下后依次观察115.97和115.82；日线收于115.68以下才确认主要波谷失守。</p>
+<p>完整60分钟收于116.02及以下后依次观察115.97、115.85—115.89成交区和115.82；日线收于115.68及以下才确认主要波谷失守。</p>
 <div class="trigger"><span>下一触发</span><b>60m ≤ 116.02</b></div>
 </div>
 </article>
@@ -808,7 +808,7 @@ html
 <tr><td>均线位置</td><td>周线高于EMA20；日线和60m低于EMA20/SMA20</td><td>高周期背景与中短周期调整冲突</td><td>由价格计算，与趋势方向同源</td><td><span class="status support">辅助</span></td></tr>
 <tr><td>动量</td><td>日线MACD负柱扩大；60m/30m RSI约36</td><td>调整动量仍占优，但尚非极端超卖</td><td>同一价格序列的变换</td><td><span class="status support">辅助</span></td></tr>
 <tr><td>成交量 / OBV</td><td>下跌0.18点，成交93,256手，为20日中位数1.038倍</td><td>下行有正常以上参与，未见成交高潮</td><td>成交量增加维度；OBV仍依赖收盘方向</td><td><span class="status support">支持调整</span></td></tr>
-<tr><td>持仓量</td><td>末持仓195,090手，较前日减少251手</td><td>净持仓近乎稳定，非单纯减仓行情</td><td>东方财富逐笔末值</td><td><span class="status support">已闭合</span></td></tr>
+<tr><td>持仓量</td><td>末持仓195,090手，较前日减少251手</td><td>净持仓近乎稳定，非单纯减仓行情</td><td>东方财富逐笔末值；尚无第二来源核验</td><td><span class="status support">单源核验</span></td></tr>
 <tr><td>成交量分布</td><td>20日核心成交区116.30—116.39；近期成交重心下移</td><td>成交接受重心下降；116.30—116.39为20日核心密集阻力区</td><td>20日为分钟HLC3代理；5日为真实Tick</td><td><span class="status primary">主证据</span></td></tr>
 <tr><td>八类成交</td><td>空开24.37%、多开18.76%；空平较昨日降2.82个百分点</td><td>空开优势延续，回补支持减弱；多开恢复是反方证据</td><td>东方财富原始标签</td><td>已闭合</td></tr>
 <tr><td>形态</td><td>116.14候选低点未确认即被跌破</td><td>三角形候选失效，只确认整理向下扩展</td><td>遵守转折点时间可知性</td><td><span class="status primary">向下确认</span></td></tr>
@@ -816,6 +816,8 @@ html
 </tbody>
 </table>
 </div>
+<p class="quality-line">复核口径：EMA以首段SMA初始化；MACD(12,26,9)柱为DIF−DEA、不乘2；RSI14、ATR14用Wilder平滑。周线仅26根，不提供尚未充分初始化的周线MACD。60分钟源数据包含09:29集合竞价记录与15:15尾段，尾段不冒充完整60分钟确认；本日向下确认依据10:30和15:00完整小时收盘。</p>
+<p class="quality-line">数据边界：六日成交量与日线跨源一致，持仓195,090手仅核对东财末值，尚未完成交易所独立核验。20日和波段分布将分钟成交量分配给HLC3代表价，非逐笔真实成交价格分布；5日分布采用Tick。八类是供应商成交标签，开平差不能换算真实多空净持仓；六日变化不足以代表长期规律。未确认的形态目标、背离和复杂波浪不强行给出。</p>
 </section></details>
 <section aria-labelledby="counterTitle" class="block">
 <div class="block-title"><div><p class="section-kicker">Competing evidence</p><h2 id="counterTitle">支持证据与反方证据</h2></div></div>
@@ -836,7 +838,7 @@ html
 <div class="method-link"><b>解释MACD与柱图</b><span>分开DIF、信号线与差值</span></div>
 <div class="method-link"><b>解释RSI与衰竭动作</b><span>极值用于成熟度，不机械反转</span></div>
 <div class="method-link"><b>计算和解释OBV</b><span>只解释方向累积与背离</span></div>
-<div class="method-link"><b>计算SMA、WMA与EMA</b><span>明确同源依赖，避免重复计票</span></div>
+<div class="method-link"><b>计算SMA与EMA</b><span>明确同源依赖，避免重复计票</span></div>
 <div class="method-link"><b>价格与期货持仓量</b><span>解释新增参与，不猜测全部多空</span></div>
 <div class="method-link"><b>分析区间与突破</b><span>保留震荡解释并监控重新进入</span></div>
 <div class="method-link"><b>支撑阻力与密集交易区</b><span>综合成交量分布定位核心区域，检验支撑阻力转换</span></div>
@@ -844,7 +846,7 @@ html
 </div>
 </div>
 </main>
-<footer>单文件分享版 · 数据截至2026-09-11 15:15完整收盘 · CJPY 0.5.2主行情 · 东方财富掘金Tick · 平安橙/深海军蓝视觉体系</footer>
+<footer data-audit="full-report-20260911">单文件分享版 · 数据截至2026-09-11 15:15完整收盘 · CJPY 0.5.2主行情 · 东方财富掘金Tick · 平安橙/深海军蓝视觉体系</footer>
 </div>
 <script>
     const daily = [
@@ -929,8 +931,8 @@ html
         const iBreak=daily.findIndex(b=>b.d==='09-11');
         if([iHigh1,iLow1,iHigh2,iLow2,iBreak].every(i=>i>=0)){
           const patternLayer=el('g',{'class':'pattern-layer','aria-label':'收敛候选失效并向下扩展形态标注'});
-          patternLayer.appendChild(el('path',{d:`M ${x(iHigh1)} ${y(117.05)} L ${x(iLow2)} ${y(116.50)} L ${x(iLow2)} ${y(116.14)} L ${x(iLow1)} ${y(115.69)} Z`,fill:'#fff1e7',opacity:.58}));
-          patternLayer.appendChild(el('line',{x1:x(iHigh1),y1:y(117.05),x2:x(iLow2),y2:y(116.50),stroke:colors.navy,'stroke-width':3,opacity:.95}));
+          patternLayer.appendChild(el('path',{d:`M ${x(iHigh1)} ${y(117.05)} L ${x(iLow2)} ${y(117.05+(116.61-117.05)*(iLow2-iHigh1)/(iHigh2-iHigh1))} L ${x(iLow2)} ${y(116.14)} L ${x(iLow1)} ${y(115.69)} Z`,fill:'#fff1e7',opacity:.58}));
+          patternLayer.appendChild(el('line',{x1:x(iHigh1),y1:y(117.05),x2:x(iHigh2),y2:y(116.61),stroke:colors.navy,'stroke-width':3,opacity:.95}));
           patternLayer.appendChild(el('line',{x1:x(iLow1),y1:y(115.69),x2:x(iLow2),y2:y(116.14),stroke:colors.orange,'stroke-width':3,'stroke-dasharray':'8 5',opacity:.95}));
           [[iHigh1,117.05,'H1'],[iLow1,115.69,'L1'],[iHigh2,116.61,'H2']].forEach(([i,p,label])=>{
             patternLayer.appendChild(el('circle',{cx:x(i),cy:y(p),r:5.5,fill:colors.navy,stroke:colors.white,'stroke-width':2}));
