@@ -19,7 +19,7 @@ for(const m of html.matchAll(/<[^>]*\bid="([^"]+)"[^>]*>/g)){
  n.hidden=m[0].includes('hidden=');
 }
 for(const m of html.matchAll(/(?:href="#|aria-controls=")([^" ]+)/g))assert(nodes[m[1]],'missing target '+m[1]);
-const document={getElementById:id=>{assert(nodes[id],id);return nodes[id]},createElementNS:()=>new Element,querySelectorAll:q=>Object.values(nodes).filter(n=>(n.attrs.class||'').split(' ').includes(q.slice(1)))};
+const document={getElementById:id=>{assert(nodes[id],id);return nodes[id]},createElementNS:()=>new Element,querySelectorAll:q=>Object.values(nodes).filter(n=>q==='.morph-nav button'?(n.attrs.id||'').startsWith('morph-tab-'):(n.attrs.class||'').split(' ').includes(q.slice(1)))};
 const context=vm.createContext({document,ResizeObserver:class {observe(){}},console});
 const script=[...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map(x=>x[1]).join('\n');
 vm.runInContext(script,context);
@@ -34,6 +34,11 @@ for(const id of ['togglePattern','toggleVolume','toggleLevels']){
 for(const id of ['tab-up','tab-down','tab-base']){
  nodes[id].events.click();assert.equal(nodes[id].attrs['aria-selected'],'true');assert.equal(nodes[nodes[id].attrs['aria-controls']].hidden,false);
 }
+for(const id of Object.keys(nodes).filter(id=>id.startsWith('morph-tab-'))){
+ nodes[id].events.click();assert.equal(nodes[id].attrs['aria-selected'],'true');
+ assert.equal(nodes[nodes[id].attrs['aria-controls']].hidden,false);
+ assert.equal(document.querySelectorAll('.morph-panel').filter(n=>!n.hidden).length,1);
+}
 function check(n){for(const v of Object.values(n.attrs))assert(!/NaN|undefined|Infinity/.test(v));n.children.forEach(check)}
 check(chart);
-console.log('PASS: HTML targets, identical dist, JS rendering, three chart switches, three scenario tabs, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
+console.log('PASS: HTML targets, identical dist, JS rendering, three chart switches, three scenario tabs, four pattern-study tabs, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
