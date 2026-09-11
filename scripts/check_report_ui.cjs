@@ -1,5 +1,6 @@
 const fs = require('fs'), vm = require('vm'), assert = require('assert');
 const html = fs.readFileSync('index.html','utf8');
+assert(html.startsWith('<!DOCTYPE html>'));
 assert.strictEqual(html,fs.readFileSync('dist/index.html','utf8'));
 class Element {
  constructor(){this.attrs={};this.children=[];this.events={};this.style={};this.clientWidth=900;this.parentElement=this;}
