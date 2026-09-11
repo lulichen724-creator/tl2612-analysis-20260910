@@ -713,7 +713,7 @@
 <div class="pattern-legend">
 <div class="pattern-key"><i></i><span><b>深蓝实线：</b>117.05 → 116.61，两高点参考连线；9月9日盘中已越线，不能视为持续有效压力线。</span></div>
 <div class="pattern-key orange dashed"><i></i><span><b>橙色虚线：</b>原候选上升支撑线，116.14未确认即失效。</span></div>
-<div class="pattern-key orange"><i></i><span><b>橙色实心点：</b>9月11日收盘116.05，完成小时级向下确认。</span></div>
+<div class="pattern-key orange"><i></i><span><b>橙色实心点：</b>9月11日日线收盘116.05；小时确认另见完整小时收盘。</span></div>
 </div>
 <div class="direction-grid">
 <div class="direction-path inactive">
@@ -915,7 +915,7 @@
         profileZones.forEach(zone=>{
           const top=y(zone.high), bottom=y(zone.low);
           svg.appendChild(el('rect',{x:m.l,y:top,width:W-m.l-m.r,height:Math.max(2,bottom-top),fill:'#fff1e7',opacity:.48}));
-          svg.appendChild(txt(W-m.r-5,top+13,`${zone.label} ${zone.low.toFixed(2)}—${zone.high.toFixed(2)}`,{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
+          if(zone.low!==116.05) svg.appendChild(txt(W-m.r-5,top+13,`${zone.label} ${zone.low.toFixed(2)}—${zone.high.toFixed(2)}`,{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
         });
         levels.forEach(l=>{
           const yy=y(l.p), stroke=l.kind==='major'?colors.navy:colors.orange;
@@ -940,10 +940,9 @@
             patternLayer.appendChild(txt(x(i)+(labelBelow?10:0),y(p)+(labelBelow?17:-9),label,{fill:colors.navy,'text-anchor':labelBelow?'start':'middle','font-size':'10','font-weight':'800'}));
           });
           patternLayer.appendChild(el('circle',{cx:x(iLow2),cy:y(116.14),r:6,fill:colors.white,stroke:colors.gray,'stroke-width':3}));
-          patternLayer.appendChild(txt(x(iLow2)-4,y(116.14)+18,'候选低点失效',{fill:colors.muted,'text-anchor':'end','font-size':'10','font-weight':'800'}));
           patternLayer.appendChild(el('line',{x1:x(iLow2),y1:y(116.14),x2:x(iBreak),y2:y(116.03),stroke:colors.orange,'stroke-width':3}));
           patternLayer.appendChild(el('circle',{cx:x(iBreak),cy:y(116.03),r:6,fill:colors.orange,stroke:colors.white,'stroke-width':2}));
-          patternLayer.appendChild(txt(x(iBreak)-4,y(116.03)+18,'向下确认',{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
+          patternLayer.appendChild(txt(x(iBreak)-4,y(116.03)+18,'新低116.03',{fill:colors.orange,'text-anchor':'end','font-size':'10','font-weight':'800'}));
           svg.appendChild(patternLayer);
         }
       }
