@@ -313,18 +313,44 @@
     .pivot b { display: block; font-size: .95rem; }
     .pivot span { color: var(--muted); font-size: .65rem; }
     .pivot.pending { background: var(--orange-pale); border: 1px dashed var(--orange); }
-    .pattern-card { grid-column: 1 / -1; padding: 20px; overflow: hidden; }
-    .pattern-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(250px, .7fr); gap: 20px; align-items: center; }
+    .pattern-card { grid-column: 1 / -1; padding: 20px; overflow: hidden; border-top: 4px solid var(--orange); }
+    .pattern-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, .85fr); gap: 20px; align-items: center; }
     .pattern-visual { min-width: 0; padding: 10px 12px 4px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
     .pattern-visual svg { display: block; width: 100%; height: auto; }
     .pattern-caption h3 { margin-bottom: 8px; color: var(--navy); }
     .pattern-caption p { margin: 0 0 12px; color: var(--muted); font-size: .8rem; }
+    .pattern-status { display: grid; grid-template-columns: 1fr 1.15fr 1fr; margin: 10px 0 14px; border: 1px solid var(--border); border-radius: 11px; overflow: hidden; }
+    .pattern-status > div { padding: 10px 11px; background: var(--white); border-right: 1px solid var(--border); }
+    .pattern-status > div:last-child { border-right: 0; }
+    .pattern-status span { display: block; color: var(--muted); font-size: .61rem; font-weight: 800; letter-spacing: .06em; }
+    .pattern-status b { display: block; margin-top: 3px; color: var(--navy); font-size: .77rem; }
+    .pattern-status .direction { background: var(--orange-soft); }
+    .pattern-status .direction b { color: #9a3d00; font-size: .86rem; }
+    .pattern-card.direction-up .pattern-status .direction,
+    .pattern-card.direction-down .pattern-status .direction { background: var(--orange); }
+    .pattern-card.direction-up .pattern-status .direction span,
+    .pattern-card.direction-up .pattern-status .direction b,
+    .pattern-card.direction-down .pattern-status .direction span,
+    .pattern-card.direction-down .pattern-status .direction b { color: var(--white); }
     .pattern-legend { display: grid; gap: 8px; }
     .pattern-key { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; color: var(--muted); font-size: .74rem; }
     .pattern-key i { display: block; width: 16px; margin-top: 7px; border-top: 3px solid var(--navy); }
     .pattern-key.orange i { border-color: var(--orange); }
     .pattern-key.dashed i { border-top-style: dashed; }
     .pattern-verdict { margin-top: 13px; padding: 11px 12px; color: var(--navy); background: var(--orange-soft); border-left: 4px solid var(--orange); border-radius: 9px; font-size: .77rem; font-weight: 700; }
+    .direction-title { margin: 17px 0 8px; color: var(--navy); font-size: .82rem; font-weight: 800; }
+    .direction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .direction-path { position: relative; padding: 11px 11px 10px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+    .direction-path::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--gray); border-radius: 10px 0 0 10px; }
+    .direction-path .route { color: var(--navy); font-size: .73rem; font-weight: 800; }
+    .direction-path .price { margin-top: 4px; color: var(--ink); font-size: .7rem; line-height: 1.45; }
+    .direction-path .flag { display: inline-block; margin-top: 7px; padding: 3px 7px; color: var(--muted); background: var(--white); border: 1px solid var(--border); border-radius: 999px; font-size: .62rem; font-weight: 800; }
+    .direction-path.active { background: var(--orange-soft); border-color: var(--orange-2); box-shadow: inset 0 0 0 1px var(--orange-2); }
+    .direction-path.active::before { background: var(--orange); }
+    .direction-path.active .flag { color: var(--white); background: var(--orange); border-color: var(--orange); }
+    .direction-path.inactive { opacity: .52; }
+    .direction-rule { margin-top: 9px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .direction-rule b { color: var(--orange); }
 
     .indicator-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
     .indicator { padding: 17px; }
@@ -399,6 +425,9 @@
       .evidence-grid { grid-template-columns: 1fr; }
       .analysis-grid, .indicator-grid, .counter-grid, .method-links { grid-template-columns: 1fr; }
       .pattern-layout { grid-template-columns: 1fr; }
+      .pattern-status { grid-template-columns: 1fr; }
+      .pattern-status > div { border-right: 0; border-bottom: 1px solid var(--border); }
+      .pattern-status > div:last-child { border-bottom: 0; }
       .pivot-track { grid-template-columns: 1fr 1fr; }
       .chart-card { min-height: 510px; }
       #priceChart { height: 400px; }
@@ -561,7 +590,7 @@
           <p>形态必须先满足几何条件，再谈突破方向</p>
         </div>
         <div class="analysis-grid">
-          <figure class="card pattern-card" aria-labelledby="patternFigureTitle">
+          <figure class="card pattern-card direction-neutral" aria-labelledby="patternFigureTitle">
             <div class="pattern-layout">
               <div class="pattern-visual">
                 <svg viewBox="0 0 760 330" role="img" aria-label="TL2612收敛整理候选结构图：高点降低，低点抬高候选，尚未确认三角形">
@@ -599,14 +628,33 @@
                 </svg>
               </div>
               <figcaption class="pattern-caption">
-                <h3 id="patternFigureTitle">你现在看到的形态是什么？</h3>
-                <p><b>候选收敛三角形。</b>上边界已经有两个确认高点；下边界第二点116.14还缺右侧日线确认，所以目前只能叫“收敛整理候选”。</p>
+                <h3 id="patternFigureTitle">技术形态结论</h3>
+                <div class="pattern-status" aria-label="形态、方向和行动状态">
+                  <div><span>形态状态</span><b>候选收敛三角形</b></div>
+                  <div class="direction"><span>方向结论</span><b>尚未确认 · 中性等待</b></div>
+                  <div><span>行动状态</span><b>上下均未触发</b></div>
+                </div>
+                <p><b>客观结论：</b>上边界已有两个确认高点，下边界第二点116.14还缺右侧日线确认。当前可以确认“波动收敛”，不能确认三角形已经成立，也不能预判最终方向。</p>
                 <div class="pattern-legend">
                   <div class="pattern-key"><i></i><span><b>深蓝实线：</b>117.05 → 116.61，已经确认的下降压力线。</span></div>
                   <div class="pattern-key orange dashed"><i></i><span><b>橙色虚线：</b>115.69 → 116.14，后一点仍待确认的上升支撑线。</span></div>
                   <div class="pattern-key orange"><i></i><span><b>橙色空心点：</b>价格出现了低点，但未来日线尚未证明它是波谷。</span></div>
                 </div>
-                <div class="pattern-verdict">读图顺序：先看116.14能否成为确认波谷，再看价格从哪条边界收盘突破；形态本身不预判方向。</div>
+                <div class="pattern-verdict">当前最重要结论：形态方向仍未定。中期背景偏多与小时级调整偏弱相互抵消，只有完成K线突破才改变“中性等待”。</div>
+                <div class="direction-title">方向一旦确认，按以下层级突出显示</div>
+                <div class="direction-grid">
+                  <div class="direction-path">
+                    <div class="route">↑ 向上路径</div>
+                    <div class="price">60分钟 ≥ <b>116.39</b>为修复触发<br>突破 <b>116.61</b>才是结构转强</div>
+                    <span class="flag">当前未触发</span>
+                  </div>
+                  <div class="direction-path">
+                    <div class="route">↓ 向下路径</div>
+                    <div class="price">60分钟 ≤ <b>116.13</b>为调整扩展<br>日线 ≤ <b>115.68</b>才是结构转弱</div>
+                    <span class="flag">当前未触发</span>
+                  </div>
+                </div>
+                <div class="direction-rule"><b>显示规则：</b>未确认时两条路径等权；确认后，结论栏改为明确方向，已触发路径高亮，另一侧自动降为失效/替代情景。</div>
               </figcaption>
             </div>
           </figure>
