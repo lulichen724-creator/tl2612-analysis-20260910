@@ -32,20 +32,8 @@ for(const id of ['togglePattern','toggleVolume','toggleLevels']){
  if(id==='togglePattern')assert.equal(patterns(),0);
  nodes[id].events.click({currentTarget:nodes[id]});assert.equal(nodes[id].attrs['aria-pressed'],'true');
 }
-for(const id of ['tab-up','tab-down','tab-base']){
- nodes[id].events.click();assert.equal(nodes[id].attrs['aria-selected'],'true');assert.equal(nodes[nodes[id].attrs['aria-controls']].hidden,false);
-}
-for(const id of Object.keys(nodes).filter(id=>id.startsWith('morph-tab-'))){
- nodes[id].events.click();assert.equal(nodes[id].attrs['aria-selected'],'true');
- assert.equal(nodes[nodes[id].attrs['aria-controls']].hidden,false);
- assert.equal(document.querySelectorAll('.morph-panel').filter(n=>!n.hidden).length,1);
-}
-for(const id of Object.keys(nodes).filter(id=>id.startsWith('dash-tab-'))){
- nodes[id].events.click();assert.equal(nodes[id].attrs['aria-selected'],'true');
- assert.equal(nodes[nodes[id].attrs['aria-controls']].hidden,false);
- assert.equal(document.querySelectorAll('.dash-pane').filter(n=>!n.hidden).length,1);
- assert.equal(location.hash,'#'+nodes[id].attrs['aria-controls']);
-}
+for(const cls of ['.dash-pane','.morph-panel','.tab-panel']){assert(document.querySelectorAll(cls).every(n=>!n.hidden),'all reading panels visible');}
+assert(!/<details\b/.test(html),'no collapsed evidence');
 function check(n){for(const v of Object.values(n.attrs))assert(!/NaN|undefined|Infinity/.test(v));n.children.forEach(check)}
 check(chart);
-console.log('PASS: HTML targets, identical dist, chart rendering/switches, scenario and wave tabs, dashboard views and share hashes, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
+console.log('PASS: HTML targets, identical dist, chart rendering/switches, expanded scenarios, wave views and dashboard sections, finite SVG coordinates. DOM simulation only; no browser layout assertion.');
