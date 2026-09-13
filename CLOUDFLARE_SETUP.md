@@ -1,10 +1,13 @@
 # Cloudflare Pages 接入
 
-状态：成品已准备，账号连接及首部署尚未完成，不能宣称Cloudflare已上线。
+状态：GitHub授权及首次生产部署完成。已用浏览器验证固定网址能显示最新看板、9月11日收盘116.05、11项点位及第4浪标注。首次短暂522，刷新后恢复。
+
+生产网址：https://tl-bond-analysis.pages.dev/
+首次部署：c69ecb0e-d75e-425f-9ca0-02df1722172e；源提交2a5e97d。控制台显示Automatic deployments enabled。
 
 Git集成仓库：lulichen724-creator/tl2612-analysis-20260910
 生产分支：main
-项目名优先：tl-bond-analysis（须在创建时验证可用）
+项目名：tl-bond-analysis
 框架：None
 构建命令：exit 0
 输出目录：dist

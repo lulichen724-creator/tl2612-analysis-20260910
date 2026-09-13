@@ -190,3 +190,7 @@ Netlify信用额度套餐按成功正式部署消耗额度，GitHub制作不消�
 ## 22. 最新成品和Cloudflare迁移
 
 用户已授权将最新版发布至Cloudflare Pages。接入状态见CLOUDFLARE_SETUP.md；首次账号连接未完成时不得声称Cloudflare自动发布已就绪，取得实际域名并核验后再更新发布地址。当前成品dist/index.html包含最新全部展开、4浪范围、11项点位解释和交易结构形态前移；不展示后台来源、调用方法或三价原理，不机械生成窄带。正文简明但点位意义一至两句，日更须重新研究。Netlify额度受限，避免触发；GitHub保留成品及备用Pages。
+
+## 23. Cloudflare生产发布已接通（覆盖旧发布地址）
+
+正式分享及每日核验地址：https://tl-bond-analysis.pages.dev/ 。Cloudflare Pages已连接现有GitHub仓库main，自动部署开启，exit 0、输出dist。每日Codex完成三书研究、取数及成品后同步index.html/dist/index.html，一次推送触发自动发布，再验证固定域名日期、主力、价格与版本。GitHub Pages仅备用，Netlify不再是主发布目标；使用[skip netlify]避免消耗原平台额度。不能只看Git提交或构建成功便宣称内容更新。短暂首次522曾在刷新后恢复，后续失败如实报告。
