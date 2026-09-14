@@ -194,3 +194,7 @@ Netlify信用额度套餐按成功正式部署消耗额度，GitHub制作不消�
 ## 23. Cloudflare生产发布已接通（覆盖旧发布地址）
 
 正式分享及每日核验地址：https://tl-bond-analysis.pages.dev/ 。Cloudflare Pages已连接现有GitHub仓库main，自动部署开启，exit 0、输出dist。每日Codex完成三书研究、取数及成品后同步index.html/dist/index.html，一次推送触发自动发布，再验证固定域名日期、主力、价格与版本。GitHub Pages仅备用，Netlify不再是主发布目标；使用[skip netlify]避免消耗原平台额度。不能只看Git提交或构建成功便宣称内容更新。短暂首次522曾在刷新后恢复，后续失败如实报告。
+
+## 24. 2026-09-14运行环境恢复
+
+CJPY 0.5.2已从本机现有安装迁入规定的Codex自带Python 3.12.14，包源码哈希核验一致；gm 3.0.186与psutil已可用。每次仍先运行CJPY health并验证证书，掘金Tick依赖已登录且运行中的本地终端。不要回退系统Python，不输出会话令牌，不把旧的data_acquisition_blocked记录当作当前状态。当前恢复审计与数据位于work/20260914，属于当日快照，后续重取而非重放。两源最高价有0.01差异，成交量一致并不意味着逐笔价格完整一致；保留限制并持续核对。
