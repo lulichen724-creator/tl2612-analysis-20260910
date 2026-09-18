@@ -112,12 +112,10 @@ def candle(frame,mode):
    out.append(f'<circle cx="{xx(ix(date))}" cy="{yy(p)}" r="4" fill="white" stroke="#FF6600" stroke-width="2"/>');text(xx(ix(date)),yy(p)+22,label,'#002960',11)
  text(923,yy(116.60)+4,'116.60','#002960',12,'start');out.append('</svg></div>');return ''.join(out)
 wave=BeautifulSoup(candle(d[d.date>='2026-05-11'],'wave'),'html.parser')
-# Embedded adjustment detail shares the same chart; the main fourth-wave range stays visible.
-detail=BeautifulSoup(candle(recent,'range'),'html.parser').svg;detail.attrs.update(x='65',y='8',width='325',height='118');detail['aria-label']='第4浪内部反弹的局部K线放大'
-for node in detail.find_all('text'):node['font-size']='22'
-wave.svg.append(BeautifulSoup('<rect x="60" y="4" width="335" height="125" fill="white" stroke="#D9DEE5"/>','html.parser').rect);wave.svg.append(detail)
+# Major waves and internal abc share one actual candle chart; avoid a tiny duplicate inset.
 s.select_one('#morph-wave .compact-candle').replace_with(wave.div)
 s.select_one('#morph-triangle .compact-candle').replace_with(BeautifulSoup(candle(recent,'range'),'html.parser').div)
+s.select_one('#morph-triangle')['aria-label']='波段双底候选与短线二次探低上破'
 # Make the current, actionable structure the first pattern panel; retain the combined wave chart.
 wp=s.select_one('#morph-wave');rp=s.select_one('#morph-triangle');wp.insert_before(rp.extract())
 script=s.find_all('script')[0].string
