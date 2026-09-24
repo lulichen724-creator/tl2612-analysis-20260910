@@ -59,7 +59,7 @@ def package(raw: str, report_date: str, session: str, contract: str, price: str,
     edition = "午间版" if session == "am" else "收盘版"
     window = "指导当天下午" if session == "am" else "指导下一交易日"
     date_cn = report_date.replace("-", "年", 1).replace("-", "月", 1) + "日"
-    raw = one_replace(raw, r'<meta content="[^"]*" name="description"\s*/>',
+    raw = one_replace(raw, r'<meta\b(?=[^>]*\bname="description")[^>]*>',
                       f'<meta content="{contract} 30年期国债期货技术分析{edition}，数据截至{date_cn} {cutoff}，{window}。" name="description"/>', "description")
     raw = one_replace(raw, r'<title>.*?</title>', f'<title>{contract} 技术分析{edition}｜{report_date}</title>', "title")
     raw = one_replace(raw, r'(<div class="brand">.*?<h1>.*?</h1>\s*)<p>.*?</p>',
