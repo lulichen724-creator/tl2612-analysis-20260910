@@ -30,12 +30,20 @@ def analyze(ticks: pd.DataFrame, bars: pd.DataFrame, prior_close: float, prior_o
     if (ticks.cum_volume.diff().fillna(ticks.cum_volume.iloc[0]) != ticks.last_volume).any():
         raise ValueError("Tick cumulative volume does not close")
     output = []
-    previous_eob = None
+    previous_cutoff = None
     previous_price, previous_oi = prior_close, prior_oi
     for bar in bars.itertuples():
-        mask = ticks.created_at <= bar.eob
-        if previous_eob is not None:
-            mask &= ticks.created_at > previous_eob
+        # Goldminer labels the exchange's final session print just after the
+        # second boundary (e.g. 11:30:00.400). It belongs to the completed
+        # closing bar. Normal intraday boundary ticks belong to the next bar.
+        # Include only the closing second at 11:30 / 15:15, and still require
+        # exact price and volume closure against the vendor's completed bar.
+        cutoff = bar.eob
+        if bar.eob.strftime('%H:%M:%S') in ('11:30:00', '15:15:00'):
+            cutoff = bar.eob + pd.Timedelta(seconds=1) - pd.Timedelta(nanoseconds=1)
+        mask = ticks.created_at <= cutoff
+        if previous_cutoff is not None:
+            mask &= ticks.created_at > previous_cutoff
         segment = ticks.loc[mask]
         if segment.empty:
             raise ValueError(f"No Tick in completed bar ending {bar.eob}")
@@ -59,8 +67,8 @@ def analyze(ticks: pd.DataFrame, bars: pd.DataFrame, prior_close: float, prior_o
             "close_type_volume": types["双平"] + types["多平"] + types["空平"],
             "types": types,
         })
-        previous_eob, previous_price, previous_oi = bar.eob, last_price, last_oi
-    if int(ticks.loc[ticks.created_at <= bars.eob.iloc[-1], "last_volume"].sum()) != sum(item["volume"] for item in output):
+        previous_cutoff, previous_price, previous_oi = cutoff, last_price, last_oi
+    if int(ticks.loc[ticks.created_at <= previous_cutoff, "last_volume"].sum()) != sum(item["volume"] for item in output):
         raise ValueError("Segment volume does not cover requested session")
     if sum(item["position_change"] for item in output) != output[-1]["position"] - prior_oi:
         raise ValueError("Segment position changes do not reconcile")
