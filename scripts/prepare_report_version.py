@@ -34,7 +34,7 @@ def nav(report_date: str, session: str, previous_close: str | None, pm_exists: b
     else:
         am = f'<a href="{am_url}">午间版 · 指导下午</a>' if (REPORTS / f"{report_date}-am.html").exists() else '<span class="edition-pending">当日午间版未发布</span>'
         pm = '<span class="edition-current" aria-current="page">收盘版 · 指导下一交易日</span>'
-    old = f'<a href="/reports/{previous_close}-pm.html">上一交易日收盘版</a>' if previous_close and session == "am" else ''
+    old = f'<a href="/reports/{previous_close}-pm.html">上一份收盘版 · {previous_close}</a>' if previous_close and session == "am" else ''
     return (
         '\n<!-- report-version-nav:start -->\n'
         '<nav class="edition-nav" aria-label="报告版本"><strong>报告版本</strong>'
