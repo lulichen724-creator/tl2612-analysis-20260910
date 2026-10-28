@@ -19,8 +19,8 @@ from eastmoney_tick_structure import FIELDS, TYPE_NAMES, get_running_terminal_to
 
 
 def analyze(ticks: pd.DataFrame, bars: pd.DataFrame, prior_close: float, prior_oi: int) -> dict:
-    ticks = ticks.drop_duplicates(subset=FIELDS.split(",")).sort_values("created_at").copy()
-    ticks["created_at"] = pd.to_datetime(ticks["created_at"])
+    ticks = ticks.drop_duplicates(subset=FIELDS.split(",")).sort_values("created_at", kind="stable").copy()
+    ticks["created_at"] = pd.to_datetime(ticks["created_at"], format="mixed")
     for field in ("price", "last_volume", "cum_volume", "cum_position", "trade_type"):
         ticks[field] = pd.to_numeric(ticks[field], errors="raise")
     bars = bars.sort_values("eob").copy()
@@ -35,15 +35,16 @@ def analyze(ticks: pd.DataFrame, bars: pd.DataFrame, prior_close: float, prior_o
     for bar in bars.itertuples():
         # Goldminer labels the exchange's final session print just after the
         # second boundary (e.g. 11:30:00.400). It belongs to the completed
-        # closing bar. Normal intraday boundary ticks belong to the next bar.
+        # closing bar. Normal intraday boundary ticks, including an exact
+        # HH:MM:00 timestamp, belong to the next bar: [start, end).
         # Include only the closing second at 11:30 / 15:15, and still require
         # exact price and volume closure against the vendor's completed bar.
         cutoff = bar.eob
         if bar.eob.strftime('%H:%M:%S') in ('11:30:00', '15:15:00'):
-            cutoff = bar.eob + pd.Timedelta(seconds=1) - pd.Timedelta(nanoseconds=1)
-        mask = ticks.created_at <= cutoff
+            cutoff = bar.eob + pd.Timedelta(seconds=1)
+        mask = ticks.created_at < cutoff
         if previous_cutoff is not None:
-            mask &= ticks.created_at > previous_cutoff
+            mask &= ticks.created_at >= previous_cutoff
         segment = ticks.loc[mask]
         if segment.empty:
             raise ValueError(f"No Tick in completed bar ending {bar.eob}")
@@ -68,7 +69,7 @@ def analyze(ticks: pd.DataFrame, bars: pd.DataFrame, prior_close: float, prior_o
             "types": types,
         })
         previous_cutoff, previous_price, previous_oi = cutoff, last_price, last_oi
-    if int(ticks.loc[ticks.created_at <= previous_cutoff, "last_volume"].sum()) != sum(item["volume"] for item in output):
+    if int(ticks.loc[ticks.created_at < previous_cutoff, "last_volume"].sum()) != sum(item["volume"] for item in output):
         raise ValueError("Segment volume does not cover requested session")
     if sum(item["position_change"] for item in output) != output[-1]["position"] - prior_oi:
         raise ValueError("Segment position changes do not reconcile")
