@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION_FILE = ROOT / 'work/python-deps/gm/__version__.py'
-MINIMUM = (3, 0, 187)
+MINIMUM = (3, 0, 192)
 
 def main():
     if not VERSION_FILE.is_file():
