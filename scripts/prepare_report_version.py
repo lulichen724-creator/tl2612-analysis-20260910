@@ -26,6 +26,12 @@ def one_replace(source: str, pattern: str, replacement: str, label: str) -> str:
 
 
 def nav(report_date: str, session: str, previous_close: str | None, pm_exists: bool) -> str:
+    if session == 'pm' and report_date >= '2026-11-03':
+        old = f'<a href="/reports/{previous_close}-pm.html">上一份收盘版 · {previous_close}</a>' if previous_close else ''
+        return ('\n<!-- report-version-nav:start -->\n'
+                '<nav class="edition-nav" aria-label="报告版本"><strong>报告版本</strong>'
+                '<span class="edition-current" aria-current="page">收盘版 · 指导下一交易日</span>'
+                f'{old}</nav>\n<!-- report-version-nav:end -->\n')
     am_url = f"/reports/{report_date}-am.html"
     pm_url = f"/reports/{report_date}-pm.html"
     if session == "am":
