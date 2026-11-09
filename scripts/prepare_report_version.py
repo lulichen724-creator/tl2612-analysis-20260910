@@ -49,11 +49,15 @@ def nav(report_date: str, session: str, previous_close: str | None, pm_exists: b
     )
 
 
-def package(raw: str, report_date: str, session: str, contract: str, price: str, cutoff: str, previous_close: str | None, pm_exists: bool) -> str:
+def package(raw: str, report_date: str, session: str, contract: str, price: str, cutoff: str, previous_close: str | None, pm_exists: bool, companion: str | None = None, companion_price: str | None = None) -> str:
     if not raw.lstrip().startswith("<!DOCTYPE html>"):
         raise ValueError("Candidate is not a complete HTML page")
     if report_date not in raw or contract not in raw or price not in raw:
         raise ValueError("Candidate does not contain the stated date, contract and price")
+    if companion and (not companion_price or companion not in raw or companion_price not in raw):
+        raise ValueError("Candidate does not contain the companion contract and price")
+    contract_label = f"{contract} / {companion}" if companion else contract
+    price_label = f"{contract} {price} / {companion} {companion_price}" if companion else price
     if not re.search(r'<div class="top-meta">', raw):
         raise ValueError("Missing report header")
     if session == "am" and re.search(r'<div class="label">(?:收盘价|日终持仓)</div>', raw):
@@ -67,10 +71,11 @@ def package(raw: str, report_date: str, session: str, contract: str, price: str,
     window = "指导当天下午" if session == "am" else "指导下一交易日"
     date_cn = report_date.replace("-", "年", 1).replace("-", "月", 1) + "日"
     raw = one_replace(raw, r'<meta\b(?=[^>]*\bname="description")[^>]*>',
-                      f'<meta content="{contract} 30年期国债期货技术分析{edition}，数据截至{date_cn} {cutoff}，{window}。" name="description"/>', "description")
-    raw = one_replace(raw, r'<title>.*?</title>', f'<title>{contract} 技术分析{edition}｜{report_date}</title>', "title")
+                      f'<meta content="{contract_label} 30年期国债期货技术分析{edition}，数据截至{date_cn} {cutoff}，{window}。" name="description"/>', "description")
+    raw = one_replace(raw, r'<title>.*?</title>', f'<title>{contract_label} 技术分析{edition}｜{report_date}</title>', "title")
+    brand_label = f'{contract} · {leader_label} · {companion}移仓跟踪 · {edition}' if companion else f'{contract} · {leader_label} · {edition}'
     raw = one_replace(raw, r'(<div class="brand">.*?<h1>.*?</h1>\s*)<p>.*?</p>',
-                      rf'\g<1><p>{contract} · {leader_label} · {edition}</p>', "brand")
+                      rf'\g<1><p>{brand_label}</p>', "brand")
     raw = one_replace(raw, r'<div class="top-meta">.*?</div>',
                       f'<div class="top-meta">{report_date} · 数据截至{cutoff} · {window}</div>', "top-meta")
     if 'id="report-edition-style"' not in raw:
@@ -87,7 +92,7 @@ def package(raw: str, report_date: str, session: str, contract: str, price: str,
     raw = one_replace(raw, r'<footer([^>]*)>',
                       rf'<footer\g<1> data-report-session="{session}" data-data-cutoff="{cutoff}" data-guidance-window="{window}">', "footer")
     raw = one_replace(raw, r'(<footer[^>]*>).*?(</footer>)',
-                      rf'\g<1>{contract} · {report_date} {edition} · 数据截至{cutoff} · {window} · 价格{price}\g<2>', "footer body")
+                      rf'\g<1>{contract_label} · {report_date} {edition} · 数据截至{cutoff} · {window} · 价格{price_label}\g<2>', "footer body")
     return raw
 
 
@@ -99,6 +104,8 @@ def main() -> None:
     parser.add_argument("--session", choices=("am", "pm"), required=True)
     parser.add_argument("--contract", required=True)
     parser.add_argument("--price", required=True)
+    parser.add_argument("--companion", help="Separately researched contract tracked during a roll")
+    parser.add_argument("--companion-price", help="Companion contract's own closing price")
     parser.add_argument("--cutoff", required=True, help="Actual completed market-data cutoff HH:MM")
     parser.add_argument("--special-session-note", help="Required if exchange announces a nonstandard market cutoff")
     args = parser.parse_args()
@@ -117,7 +124,7 @@ def main() -> None:
     previous = sorted(p.stem[:10] for p in REPORTS.glob("????-??-??-pm.html") if p.stem[:10] < args.date)
     prior_pm = previous[-1] if previous else None
     current_pm_exists = args.session == "pm" or (REPORTS / f"{args.date}-pm.html").exists()
-    page = package(raw, args.date, args.session, args.contract, args.price, args.cutoff, prior_pm, current_pm_exists)
+    page = package(raw, args.date, args.session, args.contract, args.price, args.cutoff, prior_pm, current_pm_exists, args.companion, args.companion_price)
     archive = REPORTS / f"{args.date}-{args.session}.html"
     archive.write_text(page, encoding="utf-8")
     if args.session == "pm":
