@@ -1,3 +1,13 @@
+# 现行生产配置（2026-11-13）
+
+主站：https://equity-bond-analysis.pages.dev/
+项目equity-bond-analysis；旧项目tl-bond-analysis保留为兼容镜像及历史入口。
+两者连接现有GitHub仓库lulichen724-creator/tl2612-analysis-20260910，main分支、None框架、exit 0构建、dist输出。
+仅公开dist白名单成品；研究后台与原始数据不公开。唯一调度与验收见FUSION_DAILY_RUNBOOK.md。
+新项目上线以实际生产部署与全站字节核验记录为准，记录位于私有work/fusion/交易日/。
+
+以下为原TL站初始接入记录，旧点位与展示描述仅属历史，不作为今后研究或发布要求。
+
 # Cloudflare Pages 接入
 
 状态：GitHub授权及首次生产部署完成。已用浏览器验证固定网址能显示最新看板、9月11日收盘116.05、11项点位及第4浪标注。首次短暂522，刷新后恢复。

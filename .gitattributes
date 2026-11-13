@@ -1,0 +1,3 @@
+# Preserve reviewed release bytes and archive hashes across Windows checkouts.
+dist/** -text whitespace=cr-at-eol
+index.html -text whitespace=cr-at-eol
