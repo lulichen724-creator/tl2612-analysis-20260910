@@ -345,3 +345,8 @@ Codex缓存运行时可能在工具初始化时被还原，不能仅依据主环
 用户授权股指、T、TL融合站发布，并要求每个实际交易日15:30更新及更换网址。以同目录FUSION_DAILY_RUNBOOK.md为唯一股债调度和发布规范。automation-2改为股债九书收盘发布，原tl任务暂停；原第39、41节的独立TL首页打包和推送由融合站统一发布替代。不得用prepare_report_version.py覆盖融合首页或另行推送TL首页。TL完整研究保留在融合站tl-full.html，原历史TL归档路径不变。
 
 主网址https://equity-bond-analysis.pages.dev/，旧https://tl-bond-analysis.pages.dev/保留兼容镜像；仅dist对外。研究、取数、九书逐项审计、七周期、六日真实八类、移仓双合约、原预测逐日核验及原图片邮件要求全部保留。主力当日确认，不固定TL2612/TL2703代码。邮件仅保留TL独立全文与原两位收件人，不加入股指/T或融合总览；同日已发不因迁站重发。15:30为启动，完整收盘数据及全站验收通过后发布。其他原规范与本节冲突时以本节及FUSION_DAILY_RUNBOOK.md为准。
+
+
+## 43. 全球板块与私有历史追加
+
+按FUSION_DAILY_RUNBOOK.md最新覆盖规则执行：新增美股六指数与七姐妹，GJJG原生MCP并结合CJPY/JYDB，两个市场独立收盘日期，每天15:30唤醒兼顾美股周五收盘。全站唯一发布者仍automation-2；历史只保存在本地，前台去除history.html和reports入口，打包改用scripts/global_release.py。原TL研究深度、预测口径、双合约、收盘规则与TL专属原邮件范围继续保留。

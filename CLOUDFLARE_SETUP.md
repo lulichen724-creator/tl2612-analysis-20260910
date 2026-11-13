@@ -1,3 +1,5 @@
+现行追加：美股指数与七姐妹两个板块已纳入全站；用户要求历史仅本地，当前dist移除history.html与reports历史文件，旧版本先按精确提交字节备份到私有work。日更打包使用scripts/global_release.py。
+
 # 现行生产配置（2026-11-13）
 
 主站：https://equity-bond-analysis.pages.dev/

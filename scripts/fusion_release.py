@@ -5,6 +5,11 @@ Use the Codex-bundled Python. prepare is read-only with respect to production;
 promote validates the prepared release before changing public files.
 """
 from __future__ import annotations
+if __name__=='__main__':
+    # User moved history off the website; all future CLI releases use that policy.
+    from global_release import main
+    main()
+    raise SystemExit(0)
 import argparse,hashlib,html,json,re,shutil,subprocess
 from pathlib import Path
 from html.parser import HTMLParser
