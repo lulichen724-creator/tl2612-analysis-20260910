@@ -46,6 +46,18 @@ def prepare(source,date,base):
     assert read(source/'内容与链接检查_02.json')['status']=='passed'
     rendered=read(source/'页面检查_03.json');assert rendered['status']=='passed'
     assert len(rendered['usCycleCharts'])==39 and all(x['loaded']and not x['overflow']for x in rendered['usCycleCharts'])
+    comprehensive=read(source/'comprehensive-research.json')
+    depth=read(source/'深度研究检查.json');assert depth['status']=='passed'
+    assert len(comprehensive['assets'])==25 and depth['forecast_horizons']==75
+    assert len(rendered['allCycleCharts'])==75 and all(x['loaded']and not x['overflow']for x in rendered['allCycleCharts'])
+    assert len(rendered['desktop'])==33 and len(rendered['mobile'])==33
+    assert all(not x['overflow']and not x['brokenImages']for x in rendered['desktop']+rendered['mobile'])
+    for key,row in comprehensive['assets'].items():
+        assert len(row['nine_book_applications'])==9 and row['verified_anchors']
+        assert row['near_research']['question']and row['near_research']['trigger_up']and row['near_research']['trigger_down']
+        assert all(len(row['long_research'][z])>65 for z in ['monthly','weekly','swing','position'])
+        assert row['long_research']['counter']and row['long_research']['shape']
+        assert all(key+'/'+per in comprehensive['charts']for per in ['m','w','d'])
     cn=read(source/'research.json');assert len(cn)==12
     dates=sorted({r['date']for r in cn.values()});assert len(dates)==1 and dates[0]<=date
     interp=read(source/'interpretations.json')['assets'];assert len(interp)==12 and len({v['question']for v in interp.values()})==12
@@ -68,7 +80,7 @@ def prepare(source,date,base):
         target=stage/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
     headers=subprocess.run(['git','show','HEAD:dist/_headers'],cwd=ROOT,capture_output=True)
     if headers.returncode==0:(stage/'_headers').write_bytes(headers.stdout)
-    m={'date':date,'version':version,'url':base,'market_cutoffs':{'domestic':dates[0],'us_eastern':us['us_close_date']},'assets':25,'pages':len(pages),'independent_questions':25,'history_policy':'local_only','files':{str(p.relative_to(stage)).replace('\\','/'):digest(p.read_bytes())for p in stage.rglob('*')if p.is_file()}}
+    m={'date':date,'version':version,'url':base,'market_cutoffs':{'domestic':dates[0],'us_eastern':us['us_close_date']},'assets':25,'pages':len(pages),'independent_questions':25,'research_depth':{'monthly_weekly_daily':25,'forecast_horizons':75,'nine_book_application_records':225,'high_timeframe_charts':'completed_bars_only'},'history_policy':'local_only','files':{str(p.relative_to(stage)).replace('\\','/'):digest(p.read_bytes())for p in stage.rglob('*')if p.is_file()}}
     write(stage/'release-manifest.json',json.dumps(m,ensure_ascii=False,indent=2));validate(stage,m)
     private=root/'private-research';private.mkdir()
     for p in source.glob('*.json'):shutil.copyfile(p,private/p.name)
