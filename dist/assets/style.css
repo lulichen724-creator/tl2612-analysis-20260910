@@ -17,3 +17,5 @@
 
 /* Market category labels. */
 .summary-line{grid-template-columns:72px minmax(0,1fr)}
+
+.horizon-grid p,.structural-grid p{overflow-wrap:anywhere}.chart-wide{min-width:0}.cycle-gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}.cycle-gallery img{width:100%}@media(max-width:900px){.cycle-gallery{grid-template-columns:1fr}}
